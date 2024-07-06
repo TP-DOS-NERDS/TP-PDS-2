@@ -1,4 +1,3 @@
 obj/*
 !obj/.gitkeep
-obj/games/*
 !obj/games/.gitkeep
