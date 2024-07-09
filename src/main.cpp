@@ -25,6 +25,7 @@ int main() {
   int x, y;
   while (std::cin >> x >> y) {
     reversi.move(x,y);
+    std::cout << "JOGADOR DA VEZ : " << reversi.get_next_move_player_mark() << std::endl;
     reversi.show_board();
   }
   

@@ -35,3 +35,36 @@ void Game::show_board() {
   }
 }
 
+char Game::get_in_board(int x, int y) {
+  return board[x][y];
+}
+
+int Game::get_amount_of_char_in_board(char c) {
+  int amount = 0;
+  for (int i = 0; i < board_size; i++) {
+    for (int j = 0; j < board_size; j++) {
+      if (board[i][j] == c) {
+        amount++;
+      }
+    }
+  }
+
+  return amount;
+} 
+
+std::vector<std::pair<int, int>> Game::get_positions_of_char_in_board(char c) {
+  std::vector<std::pair<int, int>> positions;
+
+  for (int i = 0; i < board_size; i++) {
+    for (int j = 0; j < board_size; j++) {
+      if (board[i][j] == c) {
+        std::pair<int, int> position = {i, j};
+
+        positions.push_back(position);
+      }
+    }
+  }
+
+  return positions;
+}
+
