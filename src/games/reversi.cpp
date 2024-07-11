@@ -3,6 +3,15 @@
 #include "../../include/games/reversi.h"
 #include "../../include/player.h"
 
+bool compareTmp1(int j, int to, bool alt_desired_move) {
+  return (alt_desired_move) ? (j > to) : (j < to);
+}
+
+void addOrSubtract(int & j, bool alt_desired_move) {
+  if (alt_desired_move) j--;
+  else j++;
+}
+
 Reversi::Reversi(Player p1, Player p2) : Game(), next_move_player(p1) {
   players.push_back(p1);
   players.push_back(p2);
@@ -42,6 +51,7 @@ std::vector<std::pair<int,int>> Reversi::valid_moves(char c) {
   return temp_empty;
 }
 
+// redefinir nome; quebrar em duas funcoes;
 bool Reversi::valid_move(int x, int y) {
   // definir oq e um movimento valido 
   
@@ -57,56 +67,119 @@ bool Reversi::valid_move(int x, int y) {
 
   // indo pra diagonal inferior direita
 
-  bool valid = 0;
+  bool valid=0;
+
+  std::vector<std::pair<int, int>> to_change;
 
   for (auto & position : positions) {
+    bool local_valid = 0;
     int delta_x = std::abs(position.first-x);
     int delta_y = std::abs(position.second-y);
 
     int amount_of_other=0;
 
     // fazer uma fn auxiliar pra comparar msm linha ou msm coluna 
+
+    bool alt_desired_move=0;
+
+    int fromY = std::min(position.second, y);
+    int toY = std::max(position.second, y);
+    
+    alt_desired_move = (fromY==y);
+    
     if (delta_x == 0 && delta_y != 0) { // mesma linha
       // verifica se tem algum elemento vazio entre eles.
-      int fromY = std::min(position.second, y);
-      int toY = std::max(position.second, y);
-      for (int j = fromY; j < toY; j++) {
+      
+      int j = fromY;
+      while (compareTmp1(j, toY, alt_desired_move)) {
         char element_in_x_j = get_in_board(x, j);
-        if (element_in_x_j == '0') {
-          valid=0;
+
+        std::cout << element_in_x_j << " - " << std::endl;
+        if (element_in_x_j == '0' && j != fromY) {
+          local_valid=0;
           break;
         } else if (element_in_x_j == other_player_move) {
           amount_of_other++;
         }
 
-        valid=1;
+        local_valid=1;
+        addOrSubtract(j, alt_desired_move);
+      }
+    }
+    
+    if (local_valid && amount_of_other==0) {
+      local_valid=0;
+    }
+
+    if (local_valid) {
+      int j = fromY;
+      while (compareTmp1(j, toY, alt_desired_move)) {
+        std::pair<int,int> position_to_change = {x, j};
+        to_change.push_back(position_to_change);
+
+        addOrSubtract(j, alt_desired_move);
       }
     }
 
-    if (valid && amount_of_other==0) {
-      valid=0;
-    }
+    if (valid == 0) 
+      valid=local_valid;
 
     amount_of_other=0;
-    if (!valid) {
-      if (delta_x != 0 && delta_y == 0) { // mesma coluna
-        // verifica se tem algum elemento vazio entre eles.
-        int fromX = std::min(position.first, x);
-        int toX = std::max(position.first, x);
-        for (int j = fromX; j < toX; j++) {
-          char element_in_j_y = get_in_board(x, j);
-          if (element_in_j_y == '0') {
-            valid=0;
-            break;
-          } else if (element_in_j_y == other_player_move) {
-            amount_of_other++;
-          }
-          valid=1;
+
+    int fromX = std::min(position.first, x);
+    int toX = std::max(position.first, x);
+
+
+    if (delta_x != 0 && delta_y == 0) { // mesma coluna
+      // verifica se tem algum elemento vazio entre eles.
+      alt_desired_move = (fromX != x);
+      int j = fromX;
+
+      std::cout << "alt_desired_move " << alt_desired_move << std::endl;
+
+      while (compareTmp1(j, toX, alt_desired_move)) {
+        char element_in_j_y = get_in_board(j, y);
+        std::cout << element_in_j_y << " - " << std::endl;
+        if (element_in_j_y == '0' && j != fromX) {
+          local_valid=0;
+          break;
+        } else if (element_in_j_y == other_player_move) {
+          amount_of_other++;
         }
+        local_valid=1;
+
+        addOrSubtract(j, alt_desired_move);
+      }
+    }
+    if (local_valid && amount_of_other==0) {
+      local_valid=0;
+    }
+
+
+    amount_of_other=0;
+
+    if (local_valid) {
+      int j = fromX;
+
+      while (compareTmp1(j, toX, alt_desired_move)) {
+        std::pair<int,int> position_to_change = {j, y};
+        to_change.push_back(position_to_change);
+
+        addOrSubtract(j, alt_desired_move);
       }
     }
 
-    // validar diagonal
+    if (valid == 0)  
+      valid=local_valid;
+  
+    // diagonal
+    std::cout << position.first << " " << position.second << std::endl;
+  }
+
+  char current_player_move = get_next_move_player_mark();
+
+  for (auto position : to_change) {
+    set_in_board(position.first, position.second, current_player_move);
   }
 
   return valid;

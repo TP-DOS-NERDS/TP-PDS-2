@@ -18,6 +18,7 @@ public:
   void set_in_board(int, int, char);
   char get_in_board(int, int);
   int get_amount_of_char_in_board(char);
+//  std::vector<std::pair<int,int>> 
   std::vector<std::pair<int, int>> get_positions_of_char_in_board(char);
 };
 #endif
