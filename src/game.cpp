@@ -30,8 +30,21 @@ bool Game::is_board_full() {
 }
 
 void Game::show_board() {
+  std:: cout << "  ";
   for (int i = 0; i < board_size; i++) {
-    std::cout << board[i] << std::endl;
+    std::cout << i << " ";
+  }
+  std::cout << std::endl;
+  for (int i = 0; i < board_size; i++) {
+    std::cout << i << " ";
+    for (int j = 0; j < board_size; j++) {
+      char val = board[i][j];
+      if (val == '1') val='O';
+      else if (val == '2') val = 'X';
+      else val = ' ';
+      std::cout << val << " ";
+    }
+    std::cout << std::endl;
   }
 }
 

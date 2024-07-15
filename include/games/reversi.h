@@ -16,6 +16,8 @@ public:
   bool valid_move(int,int);
   bool game_ended();
   void after_move();
+  void mark_valid_moves();
+  void clear_valid_moves();
   void move(int,int);
   void move_non_check(int x, int y);
   char get_next_move_player_mark();
