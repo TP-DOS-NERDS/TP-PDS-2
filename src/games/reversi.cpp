@@ -83,8 +83,7 @@ bool Reversi::valid_move(int x, int y) {
   for (auto& position : positions) {
     if (position.first == x) {
       if (add_positions_to_change(x, y, 0, (position.second < y) ? -1 : 1)) {
-        valid = true;
-      }
+        valid = true; }
     } else if (position.second == y) {
       if (add_positions_to_change(x, y, (position.first < x) ? -1 : 1, 0)) {
         valid = true;

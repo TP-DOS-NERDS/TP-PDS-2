@@ -19,7 +19,7 @@ public:
   void mark_valid_moves();
   void clear_valid_moves();
   void move(int,int);
-  void move_non_check(int x, int y);
+  void move_non_check(int, int);
   char get_next_move_player_mark();
   char get_next_next_move_player_mark();
   std::vector<std::pair<int,int>> valid_moves(char);

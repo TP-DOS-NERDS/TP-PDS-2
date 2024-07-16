@@ -29,6 +29,10 @@ bool Game::is_board_full() {
   return default_chars==0;
 }
 
+bool Game::is_position_valid(int i, int j) {
+  return !(i < 0 || j < 0 || i >= board_size || j >= board_size);
+}
+
 void Game::show_board() {
   std:: cout << "  ";
   for (int i = 0; i < board_size; i++) {
