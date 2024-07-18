@@ -9,6 +9,7 @@
 // as funcionalidades básicas.
 // Após a primeira etapa de desenvolvimento, vamos fazer um menu e posteriormente extras (Talvez Menu 2D).
 int main() {
+
   PlayersRepository repo;
   Player p1("ullas", "ulisses");
   Player p2("tsuy", "rafael");
@@ -19,8 +20,10 @@ int main() {
 //  Reversi game(p1,p2);
 
   Reversi game(p1, p2);
-  game.show_board();
+  game.render_board();
   
+  return 0;
+  game.show_board();
   std::cout << " -- FASE DE TESTES [INTERFACE E MENU A SEREM FEITOS] -- " << std::endl;
   std::cout << " Insira pares x e y para ir populando o tabuleiro do jogo Reversi. " << std::endl;
 

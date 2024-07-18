@@ -22,7 +22,7 @@ ${OBJ_DIR}/main.o: ${INCLUDE_DIR}/players_repository.h ${INCLUDE_DIR}/player.h $
 	${CC} ${FLAGS} -o ${OBJ_DIR}/main.o -c ${SRC_DIR}/main.cpp -I ${INCLUDE_DIR}
 
 main: ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o ${OBJ_DIR}/games/lig4.o
-	${CC} ${FLAGS} ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o  -o game
+	${CC} ${FLAGS} ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o  -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system 
 
 clean:
 	rm -f ${OBJ_DIR}/*.o game

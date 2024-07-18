@@ -1,5 +1,7 @@
 #include <iostream>
+#include <cmath>
 #include "../include/game.h"
+#include <SFML/Graphics.hpp>
 
 Game::Game() {
   board_size=8;
@@ -85,3 +87,61 @@ std::vector<std::pair<int, int>> Game::get_positions_of_char_in_board(char c) {
   return positions;
 }
 
+const int circleRadius = 20;
+const int circleSpacing = 50;
+
+void Game::render_board() {
+  sf::RenderWindow window(sf::VideoMode(800, 600), "NERDS");
+
+  while (window.isOpen()) {
+    sf::Event event;
+
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      } else if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+          int mouseX = event.mouseButton.x;
+          int mouseY = event.mouseButton.y;
+
+          for (int row = 0; row < board_size; ++row) {
+            for (int col = 0; col < board_size; ++col) {
+              int circleX = col * circleSpacing + circleRadius;
+              int circleY = row * circleSpacing + circleRadius;
+
+              if (sqrt(pow(mouseX - circleX, 2) + pow(mouseY - circleY, 2)) < circleRadius) {
+                apply_visual_move(row, col);
+                // Call the move function with the clicked circle's position
+                //move(row, col);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    window.clear(sf::Color::Black);
+
+    // Draw the board
+    for (int row = 0; row < board_size; ++row) {
+      for (int col = 0; col < board_size; ++col) {
+        sf::CircleShape circle(circleRadius);
+        circle.setPosition(col * circleSpacing, row * circleSpacing);
+
+        if (board[row][col] == '1') {
+          circle.setFillColor(sf::Color::Red);
+        } else if (board[row][col] == '2') {
+          circle.setFillColor(sf::Color::Blue);
+        }else {
+          circle.setFillColor(sf::Color::Transparent);
+          circle.setOutlineColor(sf::Color::White);
+          circle.setOutlineThickness(2);
+        }
+
+        window.draw(circle);
+      }
+    }
+
+    window.display();
+  }
+}

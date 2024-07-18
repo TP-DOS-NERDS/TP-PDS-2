@@ -148,3 +148,7 @@ void Reversi::move_non_check(int x, int y) {
   set_in_board(x, y, player_mark);
   after_move();
 }
+
+void Reversi::apply_visual_move(int x, int y) {
+  Reversi::move(x,y);
+}

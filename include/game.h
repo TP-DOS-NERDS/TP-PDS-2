@@ -8,10 +8,12 @@ class Game {
 protected:
   std::vector<std::string> board;
   int board_size;
+  virtual void apply_visual_move(int,int)=0;
 
 public:
   Game();
   void show_board();
+  void render_board();
   virtual bool game_ended()=0;
 
   bool is_board_full();

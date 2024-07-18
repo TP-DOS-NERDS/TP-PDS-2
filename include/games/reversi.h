@@ -12,6 +12,7 @@ private:
   Player next_move_player;
 
 public:
+  void apply_visual_move(int,int);
   Reversi(Player, Player);
   bool valid_move(int,int);
   bool game_ended();
