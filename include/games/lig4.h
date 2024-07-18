@@ -19,12 +19,7 @@ private:
   static constexpr char FIRST_PLAYER = '1';
   static constexpr char SECOND_PLAYER = '2';
 
-  void play_round();
-  
-
   std::set<int> get_valid_moves();
-
-
   bool all_positions_are_ocuppied();
 
   bool position_linked(int, int);
@@ -37,7 +32,7 @@ private:
 public:
   Lig4(Player, Player);
   bool game_ended() override;
-
+  void play_round();
 
 };
 

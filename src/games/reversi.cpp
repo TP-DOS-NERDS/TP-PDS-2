@@ -1,5 +1,5 @@
-#include <algorithm>
-#include "../game.cpp"
+#include <iostream>
+#include "../../include/game.h"
 #include "../../include/games/reversi.h"
 #include "../../include/player.h"
 

@@ -1,8 +1,9 @@
-#include "../game.cpp"
+#include "../../include/game.h"
 #include "../../include/games/lig4.h"
 #include "../../include/player.h"
 #include <algorithm>
 #include <utility>
+#include <iostream>
 
 Lig4::Lig4(Player first_player, Player second_player) : Game(), players(first_player, second_player), current_player('1'), next_player('2') {
 }

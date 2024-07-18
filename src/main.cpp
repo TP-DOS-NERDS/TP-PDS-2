@@ -1,7 +1,7 @@
 #include "../include/player.h"
 #include "../include/players_repository.h"
 #include "../include/games/reversi.h"
-//#include "../include/games/lig4.h"
+#include "../include/games/lig4.h"
 
 #include <iostream>
 
@@ -18,15 +18,18 @@ int main() {
 
 //  Reversi game(p1,p2);
 
-  Reversi game(p1, p2);
+  Lig4 game(p1, p2);
   game.show_board();
   
   std::cout << " -- FASE DE TESTES [INTERFACE E MENU A SEREM FEITOS] -- " << std::endl;
   std::cout << " Insira pares x e y para ir populando o tabuleiro do jogo Reversi. " << std::endl;
 
+
+  game.play_round();
+  return 0;
   int x, y;
   while (std::cin >> x >> y) {
-    game.move(x, y);
+   // game.move(x, y);
 //    std::cout << "JOGADOR DA VEZ : " << reversi.get_next_move_player_mark() << std::endl;
     game.show_board();
   }
