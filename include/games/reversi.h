@@ -14,7 +14,6 @@ private:
 public:
   void apply_visual_move(int,int);
   Reversi(Player, Player);
-  bool valid_move(int,int);
   bool game_ended();
   void after_move();
   void mark_valid_moves();
@@ -23,7 +22,8 @@ public:
   void move_non_check(int, int);
   char get_next_move_player_mark();
   char get_next_next_move_player_mark();
-  std::vector<std::pair<int,int>> valid_moves(char);
+  std::vector<std::pair<int,int>> get_valid_moves(int, int);
+  bool valid_move(int, int);
 };
 
 #endif

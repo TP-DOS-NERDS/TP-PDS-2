@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "../game.cpp"
+#include <iostream>
 #include "../../include/games/reversi.h"
 #include "../../include/player.h"
 
@@ -44,23 +44,16 @@ char Reversi::get_next_next_move_player_mark() {
   }
 }
 
-// sera usado posteriormente para highlighting de posicoes validas de se jogar
-std::vector<std::pair<int,int>> Reversi::valid_moves(char c) {
-  std::vector<std::pair<int,int>> temp_empty;
-
-  return temp_empty;
-}
-
-bool Reversi::valid_move(int x, int y) {
+std::vector<std::pair<int,int>> Reversi::get_valid_moves(int x, int y) {
+  std::vector<std::pair<int, int>> to_change;
   if (get_in_board(x, y) != '0') {
-    return false;
+    return to_change;
   }
 
   char other_player_move = get_next_next_move_player_mark();
   std::vector<std::pair<int, int>> positions = get_positions_of_char_in_board(get_next_move_player_mark());
   
   bool valid = false;
-  std::vector<std::pair<int, int>> to_change;
 
   auto add_positions_to_change = [&](int startX, int startY, int dx, int dy) {
     std::vector<std::pair<int, int>> temp_positions;
@@ -97,7 +90,14 @@ bool Reversi::valid_move(int x, int y) {
     }
   }
 
-  // Change the pieces if the move is valid
+  return to_change;
+}
+
+bool Reversi::valid_move(int x, int y) {
+  auto to_change = Reversi::get_valid_moves(x, y);
+
+  bool valid = to_change.size() != 0;
+
   if (valid) {
     char current_player_move = get_next_move_player_mark();
     for (auto& position : to_change) {
@@ -114,11 +114,32 @@ bool Reversi::game_ended() {
 }
 
 void Reversi::after_move() {
-  Player p1 = players[0], p2 = players[1];
-  if (next_move_player.get_username() == p1.get_username()) {
-    next_move_player=p2;
-  } else {
-    next_move_player=p1;
+  auto swap_current_player = [&](Reversi* reversi) {
+    Player p1 = reversi->players[0], p2 = reversi->players[1];
+    if (reversi->next_move_player.get_username() == p1.get_username()) {
+      reversi->next_move_player=p2;
+    } else {
+      reversi->next_move_player=p1;
+    }
+  };
+
+  swap_current_player(this);
+ 
+  int valid_moves=0;
+
+  for (int i = 0; i < board_size; i++) {
+    for (int j = 0; j < board_size; j++) {
+      std::vector<std::pair<int,int>> to_change = get_valid_moves(i, j);
+
+      valid_moves += (int)to_change.size();
+
+      set_in_board(i,j,'3');
+    }
+  }
+
+  if (valid_moves==0) {
+    std::cout << "PASSOU A VEZ " << std::endl;
+    swap_current_player(this);
   }
 }
 
@@ -146,7 +167,12 @@ void Reversi::move(int x, int y) {
 void Reversi::move_non_check(int x, int y) {
   char player_mark = get_next_move_player_mark();
   set_in_board(x, y, player_mark);
-  after_move();
+  Player p1 = players[0], p2 = players[1];
+  if (next_move_player.get_username() == p1.get_username()) {
+    next_move_player=p2;
+  } else {
+    next_move_player=p1;
+  }
 }
 
 void Reversi::apply_visual_move(int x, int y) {
