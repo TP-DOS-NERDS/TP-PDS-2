@@ -125,3 +125,4 @@ bool Lig4::position_linked_diagonally(int i, int j) {
 bool Lig4::is_position_set_by_current_player(int i, int j) {
   return board[i][j] == current_player;
 }
+

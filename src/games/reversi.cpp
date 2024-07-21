@@ -20,6 +20,7 @@ Reversi::Reversi(Player p1, Player p2) : Game(), next_move_player(p1) {
   move_non_check(3,4); // p2
   move_non_check(4,4); // p1
   move_non_check(4,3); // p2
+  after_move();
 }
 
 char Reversi::get_next_move_player_mark() {
@@ -46,7 +47,8 @@ char Reversi::get_next_next_move_player_mark() {
 
 std::vector<std::pair<int,int>> Reversi::get_valid_moves(int x, int y) {
   std::vector<std::pair<int, int>> to_change;
-  if (get_in_board(x, y) != '0') {
+  char char_in_position = get_in_board(x,y);
+  if (char_in_position != '0' && char_in_position != '3') {
     return to_change;
   }
 
@@ -133,7 +135,11 @@ void Reversi::after_move() {
 
       valid_moves += (int)to_change.size();
 
-      set_in_board(i,j,'3');
+      if ((int)to_change.size() != 0) {
+        set_in_board(i,j,'3');
+      } else if (get_in_board(i,j) == '3') {
+        set_in_board(i,j,'0');
+      }
     }
   }
 
@@ -146,7 +152,6 @@ void Reversi::after_move() {
 void Reversi::move(int x, int y) {
   if (!valid_move(x, y)) {
     // excessao de movimento invalido
-  
     std::cout << "MOVE NOT ALLOWED" << std::endl;
     return;
   }
@@ -178,3 +183,4 @@ void Reversi::move_non_check(int x, int y) {
 void Reversi::apply_visual_move(int x, int y) {
   Reversi::move(x,y);
 }
+

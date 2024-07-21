@@ -91,7 +91,7 @@ const int circleRadius = 20;
 const int circleSpacing = 50;
 
 void Game::render_board() {
-  sf::RenderWindow window(sf::VideoMode(800, 600), "NERDS");
+  sf::RenderWindow window(sf::VideoMode(600, 450), "NERDS");
 
   while (window.isOpen()) {
     sf::Event event;
@@ -106,13 +106,11 @@ void Game::render_board() {
 
           for (int row = 0; row < board_size; ++row) {
             for (int col = 0; col < board_size; ++col) {
-              int circleX = col * circleSpacing + circleRadius;
-              int circleY = row * circleSpacing + circleRadius;
+              int circleX = 24 + col * circleSpacing + circleRadius;
+              int circleY = 24 + row * circleSpacing + circleRadius;
 
               if (sqrt(pow(mouseX - circleX, 2) + pow(mouseY - circleY, 2)) < circleRadius) {
                 apply_visual_move(row, col);
-                // Call the move function with the clicked circle's position
-                //move(row, col);
               }
             }
           }
@@ -122,17 +120,24 @@ void Game::render_board() {
 
     window.clear(sf::Color::Black);
 
-    // Draw the board
+//    sf::Texture t;
+//    t.loadFromFile("assets/fundo.jpg");
+//    sf::Sprite s(t);
+
+//    window.draw(s);
+
     for (int row = 0; row < board_size; ++row) {
       for (int col = 0; col < board_size; ++col) {
         sf::CircleShape circle(circleRadius);
-        circle.setPosition(col * circleSpacing, row * circleSpacing);
+        circle.setPosition(24 + (col * circleSpacing), 24 + (row * circleSpacing));
 
         if (board[row][col] == '1') {
           circle.setFillColor(sf::Color::Red);
         } else if (board[row][col] == '2') {
           circle.setFillColor(sf::Color::Blue);
-        }else {
+        } else if (board[row][col] == '3') {
+          circle.setFillColor(sf::Color(255,255,255,88));
+        } else {
           circle.setFillColor(sf::Color::Transparent);
           circle.setOutlineColor(sf::Color::White);
           circle.setOutlineThickness(2);
