@@ -1,25 +1,28 @@
 CC=g++
 FLAGS=-std=c++11 -Wall
-OBJ_DIR=obj
-SRC_DIR=src
-INCLUDE_DIR=include
+OBJ=obj
+SRC=src
+INC=include
 
 all: main
 
-${OBJ_DIR}/player.o: ${INCLUDE_DIR}/player.h ${SRC_DIR}/player.cpp
-	${CC} ${FLAGS} -c ${SRC_DIR}/player.cpp -I ${INCLUDE_DIR} -o ${OBJ_DIR}/player.o
+${OBJ}/player.o: ${SRC}/player.cpp ${INC}/player.h
+	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
 
-${OBJ_DIR}/players_repository.o: ${SRC_DIR}/players_repository.cpp ${INCLUDE_DIR}/player.h
-	${CC} ${FLAGS} -o ${OBJ_DIR}/players_repository.o -c ${SRC_DIR}/players_repository.cpp -I ${INCLUDE_DIR}
+${OBJ}/players_repository.o: ${SRC}/players_repository.cpp ${INC}/player.h
+	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
 
-${OBJ_DIR}/games/reversi.o: ${INCLUDE_DIR}/player.h ${INCLUDE_DIR}/game.h ${SRC_DIR}/game.cpp ${SRC_DIR}/games/reversi.cpp
-	${CC} ${FLAGS} -o ${OBJ_DIR}/games/reversi.o -c ${SRC_DIR}/games/reversi.cpp -I ${INCLUDE_DIR}
+${OBJ}/games/minesweeper.o: ${SRC}/games/minesweeper.cpp ${INC}/player.h ${INC}/game.h
+	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
 
-${OBJ_DIR}/main.o: ${INCLUDE_DIR}/players_repository.h ${INCLUDE_DIR}/player.h ${SRC_DIR}/main.cpp
-	${CC} ${FLAGS} -o ${OBJ_DIR}/main.o -c ${SRC_DIR}/main.cpp -I ${INCLUDE_DIR}
+${OBJ}/games/reversi.o: ${SRC}/games/reversi.cpp ${INC}/player.h ${INC}/game.h
+	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
 
-main: ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o
-	${CC} ${FLAGS} ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o -o game
+${OBJ}/main.o: ${SRC}/main.cpp ${INC}/players_repository.h ${INC}/player.h
+	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
+
+main: ${OBJ}/main.o ${OBJ}/player.o ${OBJ}/players_repository.o ${OBJ}/games/reversi.o ${OBJ}/games/minesweeper.o
+	${CC} ${FLAGS} -o $@ $^ -I$(INC)
 
 clean:
-	rm -f ${OBJ_DIR}/*.o game
+	rm -f ${OBJ}/*.o game

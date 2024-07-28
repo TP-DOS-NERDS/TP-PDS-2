@@ -1,6 +1,7 @@
 #include "../include/player.h"
 #include "../include/players_repository.h"
 #include "../include/games/reversi.h"
+#include "../include/games/minesweeper.h"
 
 #include <iostream>
 
