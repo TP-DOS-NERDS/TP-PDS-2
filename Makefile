@@ -4,7 +4,7 @@ OBJ=obj
 SRC=src
 INC=include
 
-all: main
+all: game
 
 ${OBJ}/player.o: ${SRC}/player.cpp ${INC}/player.h
 	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
@@ -21,7 +21,7 @@ ${OBJ}/games/reversi.o: ${SRC}/games/reversi.cpp ${INC}/player.h ${INC}/game.h
 ${OBJ}/main.o: ${SRC}/main.cpp ${INC}/players_repository.h ${INC}/player.h
 	${CC} ${FLAGS} -o $@ -c $< -I$(INC)
 
-main: ${OBJ}/main.o ${OBJ}/player.o ${OBJ}/players_repository.o ${OBJ}/games/reversi.o ${OBJ}/games/minesweeper.o
+game: ${OBJ}/main.o ${OBJ}/player.o ${OBJ}/players_repository.o ${OBJ}/games/reversi.o ${OBJ}/games/minesweeper.o
 	${CC} ${FLAGS} -o $@ $^ -I$(INC)
 
 clean:
