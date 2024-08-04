@@ -6,20 +6,23 @@ INCLUDE_DIR=include
 
 all: main
 
-${OBJ_DIR}/player.o: ${INCLUDE_DIR}/player.h ${SRC_DIR}/player.cpp
-	${CC} ${FLAGS} -c ${SRC_DIR}/player.cpp -I ${INCLUDE_DIR} -o ${OBJ_DIR}/player.o
+${OBJ_DIR}/game_ids.o: ${SRC_DIR}/game_ids.cpp ${INCLUDE_DIR}/game_ids.h 
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-${OBJ_DIR}/players_repository.o: ${SRC_DIR}/players_repository.cpp ${INCLUDE_DIR}/player.h
-	${CC} ${FLAGS} -o ${OBJ_DIR}/players_repository.o -c ${SRC_DIR}/players_repository.cpp -I ${INCLUDE_DIR}
+${OBJ_DIR}/player.o: ${SRC_DIR}/player.cpp ${INCLUDE_DIR}/player.h ${INCLUDE_DIR}/game_ids.h 
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-${OBJ_DIR}/games/reversi.o: ${INCLUDE_DIR}/player.h ${INCLUDE_DIR}/game.h ${SRC_DIR}/game.cpp ${SRC_DIR}/games/reversi.cpp
-	${CC} ${FLAGS} -o ${OBJ_DIR}/games/reversi.o -c ${SRC_DIR}/games/reversi.cpp -I ${INCLUDE_DIR}
+${OBJ_DIR}/player_repository.o: ${SRC_DIR}/player_repository.cpp ${INCLUDE_DIR}/player_repository.h  ${INCLUDE_DIR}/player.h 
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-${OBJ_DIR}/main.o: ${INCLUDE_DIR}/players_repository.h ${INCLUDE_DIR}/player.h ${SRC_DIR}/main.cpp
-	${CC} ${FLAGS} -o ${OBJ_DIR}/main.o -c ${SRC_DIR}/main.cpp -I ${INCLUDE_DIR}
+${OBJ_DIR}/game_center.o: ${SRC_DIR}/game_center.cpp ${INCLUDE_DIR}/game_center.h ${INCLUDE_DIR}/player_repository.h ${INCLUDE_DIR}/player.h ${INCLUDE_DIR}/IOHandler.h
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-main: ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o
-	${CC} ${FLAGS} ${OBJ_DIR}/main.o ${OBJ_DIR}/player.o ${OBJ_DIR}/players_repository.o ${OBJ_DIR}/games/reversi.o -o game
+${OBJ_DIR}/main.o: ${SRC_DIR}/main.cpp ${INCLUDE_DIR}/game_center.h 
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
+
+main:	${OBJ_DIR}/main.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o 
+	${CC} ${FLAGS} -o $@ $^ -I ${INCLUDE_DIR}
 
 clean:
-	rm -f ${OBJ_DIR}/*.o game
+	rm obj/main.o
