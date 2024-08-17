@@ -28,3 +28,21 @@ void IOHandler::print(const std::vector<const Player*>& players) {
     std::cout << std::endl;
   }
 }
+
+template <typename T>
+void IOHandler::print(const std::vector<std::vector<int>>& board) {
+  // const int EMPTY_SPACE = 0;
+  //
+  // for(int i = 0; i < board.size(); i++) {
+  //   std::string row = "| ";
+  //   for(int j = 0; j < board[i].size(); j++) {
+  //     board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j] + '0');
+  //     row += " | ";
+  //   }
+  //
+  //   for(int j = 0; j < 42; j++) {
+  //     std::cout << "-";
+  //   }
+  //   std::cout << std::endl;
+  // }
+}

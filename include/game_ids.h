@@ -12,6 +12,9 @@ enum class GameId {
 
 std::string game_id_to_string(GameId id);
 
+GameId string_to_game_id(std::string str);
+
+bool game_exists(std::string name);
 
 std::vector<GameId> all_game_ids();
 

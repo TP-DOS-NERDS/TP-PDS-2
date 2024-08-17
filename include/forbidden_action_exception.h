@@ -3,13 +3,12 @@
 
 #include <exception>
 
-enum class ErrorMessage { player_id_already_taken, player_not_found };
+enum class ErrorMessage { player_id_already_taken, player_not_found, game_not_found, invalid_player_sorting_criterion, command_not_found };
 
 class forbidden_action_exception : public std::exception{
-private:
+public:
   ErrorMessage error_message;  
 
-public:
   forbidden_action_exception(ErrorMessage error_message) {
     this->error_message = error_message;
   }

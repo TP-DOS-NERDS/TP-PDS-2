@@ -14,7 +14,14 @@ GameCenter::GameCenter() {
 
 void GameCenter::start_game_center() {
   while(continue_game_center_execution) {
-    execute_command();
+    try {
+      execute_command();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::command_not_found) {
+        IOHandler::print("Erro: Comando inexistente");
+      }
+    }
   }
 }
 
@@ -22,29 +29,63 @@ void GameCenter::execute_command() {
   std::string command = IOHandler::get<std::string>();
 
   if(command == Commands::REGISTER_PLAYER) {
-    register_player();
+    try {
+      register_player();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::player_id_already_taken) {
+        IOHandler::print("Erro: Apelido repetido");
+      }
+    }
   }
   else if(command == Commands::UNREGISTER_PLAYER) {
-    unregister_player();
+    try {
+      unregister_player();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::player_not_found) {
+        IOHandler::print("Erro: Jogador inexistente");
+      }
+    }
   }
   else if(command == Commands::LIST_PLAYERS) {
-    list_players();
+    try {
+      list_players();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::invalid_player_sorting_criterion) {
+        IOHandler::print("Erro: Criterio de ordenacao de jogadores invalido");
+      }
+    }
   }
   
   else if(command == Commands::EXECUTE_MATCH) {
-    execute_match();
+    try {
+      execute_match();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::game_not_found) {
+        IOHandler::print("Erro: Jogo inexistente");
+      }
+      if(exception.error_message == ErrorMessage::player_not_found) {
+        IOHandler::print("Erro: Jogador inexistente");
+      }
+    }
   }
   else if(command == Commands::KILL_SYSTEM) {
     continue_game_center_execution = false;
   }
+
+  throw forbidden_action_exception(ErrorMessage::command_not_found);
 }
 
 void GameCenter::register_player() {
   std::string username = IOHandler::get<std::string>();
+  // TODO : ler multiplas palavras para o nome
   std::string name = IOHandler::get<std::string>();
  
   if(players.has(username)) {
-    throw new forbidden_action_exception(ErrorMessage::player_id_already_taken);
+    throw forbidden_action_exception(ErrorMessage::player_id_already_taken);
   }
 
   Player player = Player(username, name);
@@ -59,7 +100,7 @@ void GameCenter::unregister_player() {
   std::string username = IOHandler::get<std::string>();
 
   if(!players.has(username)) {
-    throw new forbidden_action_exception(ErrorMessage::player_not_found);
+    throw forbidden_action_exception(ErrorMessage::player_not_found);
   }
 
   players.remove(username);
@@ -68,7 +109,14 @@ void GameCenter::unregister_player() {
 }
 
 void GameCenter::list_players() {
-  bool sort_by_username = IOHandler::get<std::string>() == "A";
+  std::string sorting_criterio = IOHandler::get<std::string>();
+
+  if(sorting_criterio != "A" && sorting_criterio != "N") {
+    throw forbidden_action_exception(ErrorMessage::invalid_player_sorting_criterion);
+  }
+
+  bool sort_by_username = sorting_criterio == "A";
+
 
   std::vector<const Player*> players_array = players.get_players();
 
@@ -82,6 +130,27 @@ void GameCenter::list_players() {
 }
 
 void GameCenter::execute_match() {
+  std::string game_name = IOHandler::get<std::string>();
+  std::string player1_username = IOHandler::get<std::string>();
+  std::string player2_username = IOHandler::get<std::string>(); 
+
+  if(!game_exists(game_name)) {
+    throw forbidden_action_exception(ErrorMessage::game_not_found);
+  }
+
+  if(!players.has(player1_username) || !players.has(player2_username)) {
+    throw forbidden_action_exception(ErrorMessage::player_not_found);
+  }
+
+  GameId game_id = string_to_game_id(game_name);
+
+  Game* game;
+
+  if(game_id == GameId::lig4) {
+    game = new Lig4();
+    game->play();
+  }
+
 }
 
 
