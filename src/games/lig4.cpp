@@ -18,7 +18,7 @@ Lig4::Lig4() {
 
   current_player = Lig4::FIRST_PLAYER_ID;
   next_player = Lig4::SECOND_PLAYER_ID;
-
+  winner = Lig4::NO_PLAYER;
 }
 
 Lig4::invalid_move_input_exception::invalid_move_input_exception(InputError error) {
@@ -29,6 +29,18 @@ void Lig4::play() {
   while(!game_ended()) {
     play_round();
   } 
+
+  if(current_player == FIRST_PLAYER_ID && is_a_position_linked()) {
+    winner = SECOND_PLAYER_ID;
+  } 
+
+  if(current_player == SECOND_PLAYER_ID && is_a_position_linked()) {
+    winner = FIRST_PLAYER_ID;
+  }
+}
+
+int Lig4::get_winner() {
+  return winner;
 }
 
 void Lig4::play_round() {
@@ -101,6 +113,10 @@ std::set<int> Lig4::get_valid_moves() {
 }
 
 bool Lig4::game_ended() {
+  return is_a_position_linked() || all_positions_are_ocuppied();
+}
+
+bool Lig4::is_a_position_linked() {
   for(int i = 0; i < Lig4::NUMBER_OF_ROWS; i++) {
     for(int j = 0; j < Lig4::NUMBER_OF_COLUMNS; j++) {
       if(board[i][j] == FIRST_PLAYER_ID || board[i][j] == SECOND_PLAYER_ID) {
@@ -110,8 +126,6 @@ bool Lig4::game_ended() {
       }
     }
   }
-
-  if(all_positions_are_ocuppied()) return true;
 
   return false;
 }

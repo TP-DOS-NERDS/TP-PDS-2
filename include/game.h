@@ -6,6 +6,7 @@
 class Game {
 public:
   virtual void play() = 0;
+  virtual int get_winner() = 0;
 
 private:
   virtual bool is_position_valid(std::pair<int,int> position) = 0;

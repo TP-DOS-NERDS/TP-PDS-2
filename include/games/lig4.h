@@ -14,10 +14,9 @@ class Lig4 : public Game {
 public:
   Lig4();
   void play() override;
-
+  int get_winner() override;
 
 private:
-
   enum class InputError { invalid_move, invalid_input };
   class invalid_move_input_exception : public std::exception {
   public:
@@ -25,6 +24,7 @@ private:
     invalid_move_input_exception(InputError error);
   };
     
+  int winner;
   std::vector<std::vector<int>> board;
   int current_player;
   int next_player;
@@ -34,6 +34,7 @@ private:
 
   static constexpr int FIRST_PLAYER_ID = 1;
   static constexpr int SECOND_PLAYER_ID = 2;
+  static constexpr int NO_PLAYER = 0;
 
 
   bool is_position_valid(std::pair<int,int> position) override;
@@ -47,6 +48,7 @@ private:
   std::set<int> get_valid_moves();
   bool all_positions_are_ocuppied();
 
+  bool is_a_position_linked();
   bool position_linked(std::pair<int,int> position);
   bool position_linked_horizontally(std::pair<int,int> position);
   bool position_linked_vertically(std::pair<int,int> position);

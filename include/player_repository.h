@@ -14,6 +14,7 @@ public:
   void add(Player player);
   void remove(std::string username);
   bool has(std::string username);
+  Player* get(std::string username);
   std::vector<const Player*> get_players() const;
 };
 

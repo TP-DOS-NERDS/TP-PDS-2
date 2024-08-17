@@ -144,15 +144,27 @@ void GameCenter::execute_match() {
 
   GameId game_id = string_to_game_id(game_name);
 
-  Game* game;
+  const int FIRST_PLAYER = 1;
+  const int SECOND_PLAYER = 1;
 
+  Game* game;
   if(game_id == GameId::lig4) {
     game = new Lig4();
     game->play();
   }
 
+  int winner = game->get_winner();
+  Player* player1 = players.get(player1_username);
+  Player* player2 = players.get(player2_username);
+
+  if(winner == FIRST_PLAYER) {
+    player1->increase_wins(game_id);
+    player2->increase_defeats(game_id);
+  }
+
+  else if(winner == SECOND_PLAYER) {
+    player2->increase_wins(game_id);
+    player1->increase_defeats(game_id);
+  }
+
 }
-
-
-
-
