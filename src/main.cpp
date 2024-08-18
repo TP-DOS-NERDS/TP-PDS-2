@@ -2,7 +2,7 @@
 
 int main() {
   GameCenter gc = GameCenter();
-  gc.execute_match();
+  gc.start_game_center();
 
   return 0;
 }

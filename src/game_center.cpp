@@ -31,6 +31,7 @@ void GameCenter::execute_command() {
   if(command == Commands::REGISTER_PLAYER) {
     try {
       register_player();
+      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::player_id_already_taken) {
@@ -41,6 +42,7 @@ void GameCenter::execute_command() {
   else if(command == Commands::UNREGISTER_PLAYER) {
     try {
       unregister_player();
+      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::player_not_found) {
@@ -51,6 +53,7 @@ void GameCenter::execute_command() {
   else if(command == Commands::LIST_PLAYERS) {
     try {
       list_players();
+      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::invalid_player_sorting_criterion) {
@@ -62,6 +65,7 @@ void GameCenter::execute_command() {
   else if(command == Commands::EXECUTE_MATCH) {
     try {
       execute_match();
+      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::game_not_found) {
@@ -81,7 +85,6 @@ void GameCenter::execute_command() {
 
 void GameCenter::register_player() {
   std::string username = IOHandler::get<std::string>();
-  // TODO : ler multiplas palavras para o nome
   std::string name = IOHandler::get<std::string>();
  
   if(players.has(username)) {
