@@ -2,10 +2,9 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#include <windows.h>
-#include <conio.h>
+#include <unistd.h> 
 
-Snake::Snake(Player p) : player(p), length(4), direction(77) {
+Snake::Snake(Player p) : player(p), length(4), direction(3) {
     init_board();
     place_food();
 }
@@ -21,13 +20,12 @@ void Snake::init_board() {
         }
     }
 
-    // Start
     for (int i = 0; i < length; ++i) {
         snake[0][i] = 1;
         snake[1][i] = i + 1;
-        board[1][i + 1] = '*';  // Snake body
+        board[1][i + 1] = '*'; 
     }
-    board[1][4] = '@';  // Snake head
+    board[1][4] = '@'; 
 }
 
 void Snake::place_food() {
@@ -40,12 +38,12 @@ void Snake::place_food() {
 }
 
 void Snake::print_board() const {
-    system("cls");
+    system("clear"); 
     for (int i = 0; i < 22; ++i) {
         for (int j = 0; j < 22; ++j) {
-            std::cout << board[i][j] << ' ';
+            std::cout << board[i][j] << ' '; 
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 }
 
@@ -57,12 +55,11 @@ bool Snake::move_snake(int dx, int dy) {
         return false;
     }
 
-    if (board[new_x][new_y] == '$') { // Food (or points)
+    if (board[new_x][new_y] == '$') { 
         length++;
         player.increase_wins();
         place_food();
     } else {
-        // Remove snake body
         board[snake[0][0]][snake[1][0]] = ' ';
         for (int i = 0; i < length - 1; ++i) {
             snake[0][i] = snake[0][i + 1];
@@ -70,14 +67,11 @@ bool Snake::move_snake(int dx, int dy) {
         }
     }
 
-    // Update snake head
     snake[0][length - 1] = new_x;
     snake[1][length - 1] = new_y;
 
-    // New snake head
     board[new_x][new_y] = '@';
 
-    // New snake body
     for (int i = 0; i < length - 1; ++i) {
         board[snake[0][i]][snake[1][i]] = '*';
     }
@@ -92,24 +86,37 @@ bool Snake::is_game_over(int x, int y) const {
 
 void Snake::move() {
     int dx = 0, dy = 0;
+
     switch (direction) {
-        case 72: dx = -1; dy = 0; break; // Up
-        case 80: dx = 1; dy = 0; break;  // Down
-        case 75: dx = 0; dy = -1; break; // Left
-        case 77: dx = 0; dy = 1; break;  // Right
+        case 0: dx = -1; dy = 0; break; // Up
+        case 1: dx = 1; dy = 0; break;  // Down
+        case 2: dx = 0; dy = -1; break; // Left
+        case 3: dx = 0; dy = 1; break;  // Right
     }
 
     if (!move_snake(dx, dy)) {
-        // Display game over message
-        std::cout << "Game Over! " << player.get_username() << " perdeu!" << std::endl;
-        Sleep(2000); 
+        std::cout << "Game Over! " << player.get_username() << " perdeu!\n";
+        sleep(2);
     }
-}
-
-void Snake::change_direction(int new_direction) {
-    direction = new_direction;
 }
 
 bool Snake::is_game_over() const {
     return length == 0;
+}
+
+Snake::~Snake() {
+    
+}
+
+void Snake::change_direction(int new_direction) {
+    if ((direction == 0 && new_direction != 1) ||
+        (direction == 1 && new_direction != 0) ||
+        (direction == 2 && new_direction != 3) ||
+        (direction == 3 && new_direction != 2)) {
+        direction = new_direction;
+    }
+}
+
+void Snake::wait(int milliseconds) {
+    usleep(milliseconds * 1000);
 }

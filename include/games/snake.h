@@ -21,9 +21,12 @@ private:
 
 public:
     Snake(Player player);
+    ~Snake();
+
     void move();
     void change_direction(int new_direction);
     bool is_game_over() const;
+    void wait(int milliseconds);
 };
 
 #endif
