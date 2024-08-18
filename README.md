@@ -1,7 +1,12 @@
 Trabalho Prático PDS II
 -
-
 Este código é o nosso trabalho final da disciplina PDS II.
+
+O principal objetivo desse trabalho prático foi implementar um sistema no qual é possível jogar os jogos reversi e lig4.
+
+Este trabalho foi uma ótima oportunidade para colocar em prática os principais conceitos aprendidos na disciplina como, tipos abstratos de dados, classes, herança, polimorfismo, encapsulamento, entre outros.
+
+
 Fizemos aquilo que foi solicitado pelo projeto:
 - Lig4;
 - Reversi.
