@@ -1,24 +1,19 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME2_H
+#define GAME2_H
 
-#include <string>
 #include <vector>
+#include <utility>
 
 class Game {
-private:
-  std::vector<std::string> board;
-  int board_size;
-
 public:
-  Game();
-  virtual void show_board();
-  virtual bool game_ended()=0;
+  virtual void play() = 0;
+  virtual int get_winner() = 0;
 
-  bool is_board_full();
-  void set_in_board(int, int, char);
-  char get_in_board(int, int);
-  int get_amount_of_char_in_board(char);
-//  std::vector<std::pair<int,int>> 
-  std::vector<std::pair<int, int>> get_positions_of_char_in_board(char);
+private:
+  virtual bool is_position_valid(std::pair<int,int> position) = 0;
+  virtual bool game_ended() = 0;
+  virtual void play_round() = 0;
+
 };
+
 #endif

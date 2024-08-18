@@ -17,6 +17,11 @@ void PlayersRepository::remove(std::string username) {
   players.erase(username);
 }
 
+Player* PlayersRepository::get(std::string username) {
+  auto player = players.find(username);
+  return &(player->second);
+}
+
 std::vector<const Player*> PlayersRepository::get_players() const {
   std::vector<const Player*> array;
   for(const auto& pair : players) {

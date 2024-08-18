@@ -5,6 +5,8 @@
 #include "player.h"
 #include "IOHandler.h"
 #include "forbidden_action_exception.h"
+#include "game.h"
+#include "./games/lig4.h"
 #include <algorithm>
 
 class Commands {
@@ -21,12 +23,12 @@ class GameCenter {
 public:
   GameCenter();
   void start_game_center();
+  void execute_match();
 
 private:
   PlayersRepository players;  
   bool continue_game_center_execution;
   
-  void execute_match();
   void execute_command();
   void register_player();
   void unregister_player();
