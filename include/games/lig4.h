@@ -4,43 +4,60 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <cctype>
+#include <exception>
 #include "../game.h"
-#include "../player.h"
-
-
 
 
 class Lig4 : public Game {
+public:
+  Lig4();
+  void play() override;
+  int get_winner() override;
+
 private:
-  std::pair<Player,Player> players; 
-  char current_player;
-  char next_player;
+  enum class InputError { invalid_move, invalid_input };
+  class invalid_move_input_exception : public std::exception {
+  public:
+    InputError error; 
+    invalid_move_input_exception(InputError error);
+  };
+    
+  int winner;
+  std::vector<std::vector<int>> board;
+  int current_player;
+  int next_player;
 
-  static constexpr char FIRST_PLAYER = '1';
-  static constexpr char SECOND_PLAYER = '2';
+  static constexpr int NUMBER_OF_ROWS = 6;
+  static constexpr int NUMBER_OF_COLUMNS = 7;
 
-  void play_round();
-  
+  static constexpr int FIRST_PLAYER_ID = 1;
+  static constexpr int SECOND_PLAYER_ID = 2;
+  static constexpr int NO_PLAYER = 0;
 
-  std::set<int> get_valid_moves();
 
+  bool is_position_valid(std::pair<int,int> position) override;
+  bool game_ended() override;
+  void play_round() override;
 
-  bool all_positions_are_ocuppied();
-
-  bool position_linked(int, int);
-  bool position_linked_horizontally(int, int);
-  bool position_linked_vertically(int, int);
-  bool position_linked_diagonally(int, int);
-  bool is_position_set_by_current_player(int, int);
+  int get_valid_move_input();
+  void validate_move_input(std::string move_input);
   void execute_move(int j);
 
-public:
-  Lig4(Player, Player);
-  bool game_ended() override;
+  std::set<int> get_valid_moves();
+  bool all_positions_are_ocuppied();
+
+  bool is_a_position_linked();
+  bool position_linked(std::pair<int,int> position);
+  bool position_linked_horizontally(std::pair<int,int> position);
+  bool position_linked_vertically(std::pair<int,int> position);
+  bool position_linked_diagonally(std::pair<int,int> position);
+  bool is_position_set_by_current_player(std::pair<int,int> position);
+
 
 
 };
 
 
 #endif
-

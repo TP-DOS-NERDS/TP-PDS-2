@@ -1,35 +1,19 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME2_H
+#define GAME2_H
 
-#include <string>
 #include <vector>
+#include <utility>
 
 class Game {
-protected:
-  std::vector<std::string> board;
-  int board_size;
-  virtual void apply_visual_move(int,int)=0;
-
 public:
-  Game();
-  void show_board();
-  void render_board();
-  virtual bool game_ended()=0;
+  virtual void play() = 0;
+  virtual int get_winner() = 0;
 
-  bool is_board_full();
-  bool is_position_valid(int, int);
-  void set_in_board(int, int, char);
-  char get_in_board(int, int);
-  int get_amount_of_char_in_board(char);
+private:
+  virtual bool is_position_valid(std::pair<int,int> position) = 0;
+  virtual bool game_ended() = 0;
+  virtual void play_round() = 0;
 
-  /* SUGESTOES:
-    * criar um metodo virtual para executar uma rodada do jogo
-    * criar um metodo virtual chamado play para poder jogar o jogo
-    * TROCAR as passagens de parametro i,j por pair<int,int>
-    * criar uma classe para lidar com input/output
-  */
-
-//  std::vector<std::pair<int,int>> 
-  std::vector<std::pair<int, int>> get_positions_of_char_in_board(char);
 };
+
 #endif
