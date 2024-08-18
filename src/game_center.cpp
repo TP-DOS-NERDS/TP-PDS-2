@@ -155,6 +155,10 @@ void GameCenter::execute_match() {
     game = new Lig4();
     game->play();
   }
+  if (game_id == GameId::reversi) {
+//    game = new Reversi();
+  //  game->play();
+  }
 
   int winner = game->get_winner();
   Player* player1 = players.get(player1_username);
