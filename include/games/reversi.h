@@ -7,6 +7,13 @@
 #include "../player.h"
 
 class Reversi: public Game {
+public:
+  Reversi(Player, Player);
+  Reversi(Reversi&);
+  Reversi();
+  ~Reversi();
+  void play() override;
+  int get_winner() override;
 private:
   static constexpr int FIRST_PLAYER_ID = 1;
   static constexpr int SECOND_PLAYER_ID = 2;
@@ -15,9 +22,9 @@ private:
   Player next_move_player;
   int board_size;
   std::vector<std::string> board;
-  virtual bool is_position_valid(std::pair<int,int> position) override;
-  virtual bool game_ended() override;
-  virtual void play_round() override;
+  bool is_position_valid(std::pair<int,int> position) override;
+  bool game_ended() override;
+  void play_round() override;
   void apply_visual_move(int,int);
   void after_move();
   void mark_valid_moves();
@@ -36,13 +43,6 @@ private:
   char get_in_board(int, int);
   int get_amount_of_char_in_board(char);
   std::vector<std::pair<int, int>> get_positions_of_char_in_board(char);
-public:
-  void play() override;
-  int get_winner() override;
-  Reversi(Player, Player);
-  Reversi(Reversi&);
-  Reversi();
-  ~Reversi();
 };
 
 #endif

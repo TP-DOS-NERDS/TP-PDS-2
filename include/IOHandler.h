@@ -22,6 +22,9 @@ namespace IOHandler {
 
   template <typename T>
   void print(const std::vector<std::vector<int>>& board);
+
+  template <typename T>
+  void print(const std::vector<std::string>& board);
 }
 
 template <typename T>
@@ -70,6 +73,22 @@ void IOHandler::print(const std::vector<std::vector<int>>& board) {
   }
 }
 
+template <typename T>
+void IOHandler::print(const std::vector<std::string>& board) {
+  const int EMPTY_SPACE = 0;
+  const std::string horizontal_line = std::string(30, '-');
+
+  for(int i = 0; i < board.size(); i++) {
+    std::string row = "| ";
+    for(int j = 0; j < board[i].size(); j++) {
+      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j]);
+      row += " | ";
+    }
+
+    std::cout << row << std::endl;
+    std::cout << horizontal_line << std::endl;
+  }
+}
 
 #endif
 

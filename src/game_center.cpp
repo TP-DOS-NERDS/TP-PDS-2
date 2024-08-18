@@ -156,8 +156,8 @@ void GameCenter::execute_match() {
     game->play();
   }
   if (game_id == GameId::reversi) {
-//    game = new Reversi();
-  //  game->play();
+    game = new Reversi();
+    game->play();
   }
 
   int winner = game->get_winner();

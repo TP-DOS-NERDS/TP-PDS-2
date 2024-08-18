@@ -35,4 +35,3 @@ main:	${OBJ_DIR}/main.o ${OBJ_DIR}/reversi.o ${OBJ_DIR}/lig4.o ${OBJ_DIR}/game_c
 
 clean:
 	rm -r obj
-	rm main.exe

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../../include/games/reversi.h"
+#include "../../include/IOHandler.h"
 
 bool compareTmp1(int j, int to, bool alt_desired_move) {
   return (alt_desired_move) ? (j > to) : (j < to);
@@ -151,6 +152,11 @@ bool Reversi::valid_move(int x, int y) {
   return valid;
 }
 
+bool Reversi::is_position_valid(std::pair<int,int> position) {
+  int x = position.first, y = position.second;
+
+  return valid_move(x,y);
+}
 // redefinir nome; quebrar em duas funcoes;
 bool Reversi::game_ended() {
   return (is_board_full() || (get_amount_of_char_in_board('1') == 0) || (get_amount_of_char_in_board('2') == 0));
@@ -185,7 +191,7 @@ void Reversi::after_move() {
   }
 
   if (valid_moves==0) {
-    std::cout << "PASSOU A VEZ " << std::endl;
+    IOHandler::print("SEM MOVIMENTOS VALIDOS, A VEZ E DO JOGADOR " + (std::to_string(this->get_next_next_move_player_mark()))); 
     swap_current_player(this);
   }
 }
@@ -193,7 +199,7 @@ void Reversi::after_move() {
 void Reversi::move(int x, int y) {
   if (!valid_move(x, y)) {
     // excessao de movimento invalido
-    std::cout << "MOVE NOT ALLOWED" << std::endl;
+    IOHandler::print("MOVIMENTO NAO PERMITIDO NA POSICAO " + ("(" + std::to_string(x) +", "+ std::to_string(y) + ")")); 
     return;
   }
 
@@ -206,7 +212,7 @@ void Reversi::move(int x, int y) {
 
   if (game_ended()) {
     // tratar que a partida acabou
-    std::cout << "FIM DE PARTIDA" << std::endl;
+    IOHandler::print("FIM DE PARTIDA"); 
   }
 }
 
@@ -300,18 +306,23 @@ std::vector<std::pair<int, int>> Reversi::get_positions_of_char_in_board(char c)
 }
 
 void Reversi::play() {
+  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
+  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Suas jogadas disponiveis ficam marcadas pelo caractere \'3\'"); 
+
+  IOHandler::print<std::vector<std::string>>(board);
   while(!game_ended()) {
     this->play_round();
   }
 }
 
 void Reversi::play_round() {
-  int x, y;
-  while (std::cin >> x >> y) {
-    this->move(x,y);
-    std::cout << "JOGADOR DA VEZ : " << this->get_next_move_player_mark() << std::endl;
-    this->show_board();
-  }
+  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
+  IOHandler::print<std::vector<std::string>>(board);
+
+  int x = IOHandler::get<int>();
+  int y = IOHandler::get<int>();
+  x--;y--;
+  this->move(x,y);
 }
 
 int Reversi::get_winner() {
