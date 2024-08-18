@@ -67,7 +67,7 @@ Snake
 -
 O jogador deve controlar uma cobrinha com as setas do teclado.
 
-O jogo acaba quando a cobrinha bate em si mesma.
+O jogo acaba quando a cobrinha bate em si mesma ou na parede.
 
 A cobra aumenta de tamanho sempre que come uma "bolinha".
 
