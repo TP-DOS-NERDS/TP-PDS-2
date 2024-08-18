@@ -26,12 +26,12 @@ void GameCenter::start_game_center() {
 }
 
 void GameCenter::execute_command() {
+  IOHandler::print("Digite o comando que voce deseja executar: ");
   std::string command = IOHandler::get<std::string>();
 
   if(command == Commands::REGISTER_PLAYER) {
     try {
       register_player();
-      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::player_id_already_taken) {
@@ -42,7 +42,6 @@ void GameCenter::execute_command() {
   else if(command == Commands::UNREGISTER_PLAYER) {
     try {
       unregister_player();
-      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::player_not_found) {
@@ -53,7 +52,6 @@ void GameCenter::execute_command() {
   else if(command == Commands::LIST_PLAYERS) {
     try {
       list_players();
-      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::invalid_player_sorting_criterion) {
@@ -65,7 +63,6 @@ void GameCenter::execute_command() {
   else if(command == Commands::EXECUTE_MATCH) {
     try {
       execute_match();
-      return;
     }
     catch(forbidden_action_exception& exception) {
       if(exception.error_message == ErrorMessage::game_not_found) {
@@ -80,7 +77,9 @@ void GameCenter::execute_command() {
     continue_game_center_execution = false;
   }
 
-  throw forbidden_action_exception(ErrorMessage::command_not_found);
+  else throw forbidden_action_exception(ErrorMessage::command_not_found);
+
+  IOHandler::print("\n");
 }
 
 void GameCenter::register_player() {
@@ -148,7 +147,9 @@ void GameCenter::execute_match() {
   GameId game_id = string_to_game_id(game_name);
 
   const int FIRST_PLAYER = 1;
-  const int SECOND_PLAYER = 1;
+  const int SECOND_PLAYER = 2;
+
+  IOHandler::print("Partida do jogo " + game_id_to_string(game_id) + ": \nPlayer 1: " + player1_username + "\nPlayer2: " + player2_username);
 
   Game* game;
   if(game_id == GameId::lig4) {
@@ -163,11 +164,18 @@ void GameCenter::execute_match() {
   if(winner == FIRST_PLAYER) {
     player1->increase_wins(game_id);
     player2->increase_defeats(game_id);
+
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + "encerrado. Vencedor: " + player1_username);
   }
 
   else if(winner == SECOND_PLAYER) {
     player2->increase_wins(game_id);
     player1->increase_defeats(game_id);
+
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Vencedor: " + player2_username);
   }
 
+  else {
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Empate");
+  }
 }

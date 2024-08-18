@@ -25,6 +25,10 @@ Lig4::invalid_move_input_exception::invalid_move_input_exception(InputError erro
   this->error = error; 
 }
 
+int Lig4::get_winner() {
+  return winner;
+}
+
 void Lig4::play() {
   while(!game_ended()) {
     play_round();
@@ -39,9 +43,6 @@ void Lig4::play() {
   }
 }
 
-int Lig4::get_winner() {
-  return winner;
-}
 
 void Lig4::play_round() {
   IOHandler::print<std::vector<std::vector<int>>>(board);
@@ -141,17 +142,17 @@ bool Lig4::all_positions_are_ocuppied() {
 }
 
 bool Lig4::position_linked(std::pair<int,int> position) {
-  return position_linked_horizontally(position) || position_linked_vertically(position) || position_linked_diagonally(position);
+  return board[position.first][position.second] != 0 && (position_linked_horizontally(position) || position_linked_vertically(position) || position_linked_diagonally(position));
 }
 
 bool Lig4::position_linked_horizontally(std::pair<int,int> position) {
   int links_on_right = 0, links_on_left = 0;
 
-  for(int k = position.second + 1; k < Lig4::NUMBER_OF_COLUMNS && is_position_set_by_current_player(std::make_pair(position.first, k)); k++) {
+  for(int k = position.second + 1; k < Lig4::NUMBER_OF_COLUMNS && board[position.first][position.second] == board[position.first][k]; k++) {
     links_on_right++;
   }
 
-  for(int k = position.second - 1; k >= 0 && is_position_set_by_current_player({ position.first, k }); k--) {
+  for(int k = position.second - 1; k >= 0 && board[position.first][position.second] == board[position.first][k]; k--) {
     links_on_left++;
   }
 
@@ -162,11 +163,11 @@ bool Lig4::position_linked_horizontally(std::pair<int,int> position) {
 bool Lig4::position_linked_vertically(std::pair<int,int> position) {
   int links_above = 0, links_down = 0;
 
-  for(int k = position.first - 1; k >= 0 && is_position_set_by_current_player(std::make_pair(k, position.second)); k--) {
+  for(int k = position.first - 1; k >= 0 && board[position.first][position.second] == board[k][position.second]; k--) {
     links_above++;
   }
 
-  for(int k = position.first + 1; k < Lig4::NUMBER_OF_ROWS && is_position_set_by_current_player( std::make_pair(k, position.second)); k++) {
+  for(int k = position.first + 1; k < Lig4::NUMBER_OF_ROWS && board[position.first][position.second] == board[k][position.second]; k++) {
     links_down++;
   }
 
@@ -177,18 +178,18 @@ bool Lig4::position_linked_vertically(std::pair<int,int> position) {
 
 bool Lig4::position_linked_diagonally(std::pair<int,int> position) {
   int number_of_links_on_right_diagonal = 0;
-  for(int k = 1; is_position_valid(std::make_pair(position.first + k, position.second + k)) && is_position_set_by_current_player(std::make_pair(position.first + k, position.second + k)); k++) {
+  for(int k = 1; is_position_valid(std::make_pair(position.first + k, position.second + k)) && board[position.first][position.second] == board[position.first + k][position.second + k]; k++) {
     number_of_links_on_right_diagonal++;
   }
-  for(int k = 1; is_position_valid(std::make_pair(position.first - k, position.second - k)) && is_position_set_by_current_player(std::make_pair(position.first - k, position.second - k)); k++) {
+  for(int k = 1; is_position_valid(std::make_pair(position.first - k, position.second - k)) && board[position.first][position.second] == board[position.first - k][position.second - k]; k++) {
     number_of_links_on_right_diagonal++;
   }
 
   int number_of_links_on_left_diagonal = 0;
-  for(int k = 1; is_position_valid(std::make_pair(position.first + k, position.second - k)) && is_position_set_by_current_player(std::make_pair(position.first + k, position.second - k)); k++) {
+  for(int k = 1; is_position_valid(std::make_pair(position.first + k, position.second - k)) && board[position.first][position.second] == board[position.first + k][position.second - k]; k++) {
     number_of_links_on_left_diagonal++;
   }
-  for(int k = 1; is_position_valid(std::make_pair(position.first - k, position.second + k)) && is_position_set_by_current_player(std::make_pair(position.first - k, position.second + k)); k++) {
+  for(int k = 1; is_position_valid(std::make_pair(position.first - k, position.second + k)) && board[position.first][position.second] == board[position.first - k][position.second + k]; k++) {
     number_of_links_on_left_diagonal++;
   }
 
