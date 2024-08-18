@@ -9,24 +9,24 @@ TEST_SUITE("player_repository") {
   Player luffy = Player("luffy", "Monkey D. Luffy");
   Player zoro = Player("zoro", "Ronronoa Zoro");
 
-  TEST_CASE("contains") {
+  TEST_CASE("Contains") {
     SUBCASE("item is abscent") {
       player_repository.add(ace);
 
-      CHECK_FALSE(player_repository.has(luffy.get_name()));
+      CHECK_FALSE(player_repository.has(luffy.get_username()));
+      player_repository.remove(ace.get_username());
     }
 
     SUBCASE("empty repository contains nothing") {
-      CHECK_FALSE(player_repository.has(ace.get_name()));
+      CHECK_FALSE(player_repository.has(ace.get_username()));
     }
   }
   
-  // TODO: esse nome ta legal ??
-  TEST_CASE("add") {
+  TEST_CASE("Adding players") {
     SUBCASE("add one item") {
       player_repository.add(ace); 
 
-      CHECK(player_repository.has(ace.get_name()));
+      CHECK(player_repository.has(ace.get_username()));
     }
 
     SUBCASE("add multiple items") {
@@ -37,7 +37,7 @@ TEST_SUITE("player_repository") {
       }
 
       for(auto& player : players) {
-        CHECK(player_repository.has(player.get_name()));
+        CHECK(player_repository.has(player.get_username()));
       }
     }
   }
@@ -45,9 +45,9 @@ TEST_SUITE("player_repository") {
   TEST_CASE("remove") {
     SUBCASE("remove one item") {
       player_repository.add(ace); 
-      player_repository.remove(ace.get_name());
+      player_repository.remove(ace.get_username());
 
-      CHECK_FALSE(player_repository.has(ace.get_name()));
+      CHECK_FALSE(player_repository.has(ace.get_username()));
     }
 
     SUBCASE("remove multiple items") {
@@ -58,11 +58,11 @@ TEST_SUITE("player_repository") {
       }
 
       for(auto& player : players) {
-        player_repository.remove(player.get_name());
+        player_repository.remove(player.get_username());
       } 
 
       for(auto& player : players) {
-        CHECK_FALSE(player_repository.has(player.get_name()));
+        CHECK_FALSE(player_repository.has(player.get_username()));
       }
     }
   }
@@ -76,8 +76,9 @@ TEST_SUITE("player_repository") {
 
     std::vector<const Player*> player_references = player_repository.get_players();
 
-    for(auto& player : players) {
-      CHECK(&player == &ace || &player == &luffy || &player == &zoro);
+    for(auto& player : player_references) {
+      bool exists = player->get_name() == ace.get_name() || player->get_name() == luffy.get_name() || player->get_name() == zoro.get_name();
+      CHECK(exists);
     }
   }
 }
