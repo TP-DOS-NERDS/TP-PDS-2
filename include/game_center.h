@@ -7,6 +7,7 @@
 #include "forbidden_action_exception.h"
 #include "game.h"
 #include "./games/lig4.h"
+#include "./games/minesweeper.h"
 #include <algorithm>
 
 class Commands {

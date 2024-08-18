@@ -7,7 +7,8 @@
 
 enum class GameId {
     lig4 = 0,
-    reversi = 1
+    reversi = 1,
+    minesweeper = 2
 };
 
 std::string game_id_to_string(GameId id);
