@@ -11,13 +11,14 @@ TEST_SUITE("game center tests") {
   TEST_CASE("run command") {
     SUBCASE("invalid command") {
       CinRedirector cin_redirector("listar\nFS\n"); 
-      CoutRedirector* cout_redirector = new CoutRedirector();
+      CoutRedirector cout_redirector;
 
       game_center.start_game_center();
 
-      std::string output = cout_redirector->get_content();
+      std::vector<std::string> output = cout_redirector.get_content();
+      std::vector<std::string> expected_output = {"Digite o comando que voce deseja executar:", "Erro: Comando inexistente", "Digite o comando que voce deseja executar:"};
 
-      CHECK(output == "Digite o comando que voce deseja executar:\nErro: Comando inexistente\n")
+      CHECK(output == expected_output);
     }
   }
 }
