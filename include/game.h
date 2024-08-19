@@ -16,6 +16,7 @@ public:
  * @return 1 se o primeiro jogador venceu, 2 se o segundo jogador venceu, 0 se ocorreu um empate (em jogos multiplayer)/o primeiro jogador perdeu (em jogos single player). 
  */
   virtual int get_winner() = 0;
+  virtual ~Game() {}
 
 private:
 /**
