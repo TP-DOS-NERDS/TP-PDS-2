@@ -306,17 +306,14 @@ std::vector<std::pair<int, int>> Reversi::get_positions_of_char_in_board(char c)
 }
 
 void Reversi::play() {
-  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
-  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Suas jogadas disponiveis ficam marcadas pelo caractere \'3\'"); 
-
-  IOHandler::print<std::vector<std::string>>(board);
+  IOHandler::print("Suas jogadas disponiveis ficam marcadas pelo caractere \'3\'"); 
   while(!game_ended()) {
     this->play_round();
   }
 }
 
 void Reversi::play_round() {
-  IOHandler::print("Jogada [Player " + std::to_string(this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
+  IOHandler::print("Jogada [Player " + std::string(1, this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
   IOHandler::print<std::vector<std::string>>(board);
 
   int x = IOHandler::get<int>();
