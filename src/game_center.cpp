@@ -138,7 +138,7 @@ void GameCenter::execute_match() {
   int player_count = 2;
   if (game_id == GameId::minesweeper)
     player_count = 1;
-  else if (game_id == GameId::snake
+  else if (game_id == GameId::snake)
     player_count = 1;
 
   std::string player1_username = IOHandler::get<std::string>();
@@ -150,7 +150,7 @@ void GameCenter::execute_match() {
     throw forbidden_action_exception(ErrorMessage::game_not_found);
   }
 
-  if(!players.has(player1_username) || (need_2_players && !players.has(player2_username))) {
+  if(!players.has(player1_username) || (!players.has(player2_username))) {
     throw forbidden_action_exception(ErrorMessage::player_not_found);
   }
 
@@ -199,4 +199,5 @@ void GameCenter::execute_match() {
     IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Empate");
   }
   delete game;
+  }
 }

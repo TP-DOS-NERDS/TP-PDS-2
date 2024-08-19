@@ -12,25 +12,25 @@ namespace IOHandler {
   T get();
 
   template <typename T>
-  T get_line();
-
-  template <typename T>
   void print(const T& value);
 
   template <typename T>
-  void print_player(const Player& player);
+  void print(const Player& player);
+
+  template <typename T>
+  void print(const std::vector<const Player*>& players);
+
+  template <typename T>
+  void print(const std::vector<std::vector<int>>& board);
+
+  template <typename T>
+  void print(const std::vector<std::string>& board);
 
   template <typename T>
   void print_players(const std::vector<const Player*>& players);
 
   template <typename T>
   void print_board(const std::vector<std::vector<int>>& board);
-  
-  template <typename T>
-  void print(const std::vector<std::vector<int>>& board);
-
-  template <typename T>
-  void print(const std::vector<std::string>& board);
 }
 
 template <typename T>
@@ -41,19 +41,12 @@ T IOHandler::get() {
 }
 
 template <typename T>
-T IOHandler::get_line() {
-  T value;
-  std::getline(std::cin, value);
-  return value;
-}
-
-template <typename T>
 void IOHandler::print(const T& value) {
   std::cout << value << std::endl;
 }
 
 template <typename T>
-void IOHandler::print_player(const Player& player) {
+void IOHandler::print(const Player& player) {
   print<std::string>(player.get_username() + " " + player.get_name());
   for(auto& game_id : all_game_ids()) {
     print<std::string>(game_id_to_string(game_id) + ": - V: " + std::to_string(player.get_wins_count(game_id))
@@ -62,15 +55,15 @@ void IOHandler::print_player(const Player& player) {
 }
 
 template <typename T>
-void IOHandler::print_players(const std::vector<const Player*>& players) {
+void IOHandler::print(const std::vector<const Player*>& players) {
   for(auto player : players) {
-    print_player<Player>(*player);
+    print<Player>(*player);
     std::cout << std::endl;
   }
 }
 
 template <typename T>
-void IOHandler::print_board(const std::vector<std::vector<int>>& board) {
+void IOHandler::print(const std::vector<std::vector<int>>& board) {
   const int EMPTY_SPACE = 0;
   const std::string horizontal_line = std::string(30, '-');
 
@@ -104,4 +97,3 @@ void IOHandler::print(const std::vector<std::string>& board) {
 }
 
 #endif
-
