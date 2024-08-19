@@ -9,7 +9,8 @@ enum class GameId {
     not_found = -1,
     lig4 = 0,
     reversi = 1,
-    snake = 2
+    minesweeper = 2
+    snake = 3
 };
 
 std::string game_id_to_string(GameId id);

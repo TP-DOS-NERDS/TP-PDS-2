@@ -6,7 +6,6 @@
 #include <cctype>
 #include <string>
 #include <utility>
-#include <iostream>
 
 Lig4::Lig4() {
   board = std::vector<std::vector<int>>(Lig4::NUMBER_OF_ROWS, std::vector<int>(Lig4::NUMBER_OF_COLUMNS));
@@ -45,7 +44,7 @@ void Lig4::play() {
 
 
 void Lig4::play_round() {
-  IOHandler::print<std::vector<std::vector<int>>>(board);
+  IOHandler::print_board<std::vector<std::vector<int>>>(board);
 
   int column_index = get_valid_move_input();
   execute_move(column_index);  
