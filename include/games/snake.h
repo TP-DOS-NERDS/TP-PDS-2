@@ -20,10 +20,11 @@ private:
   void print_board() const;
   bool move_snake(int dx, int dy);
   bool is_game_over(int x, int y) const;
+  bool is_board_full() const;
   bool is_position_valid(std::pair<int,int> position);
   bool game_ended();
   void play_round();
-
+  int score;
 
 public:
   Snake(Player player);
@@ -36,6 +37,7 @@ public:
   void change_direction(int new_direction);
   bool is_game_over() const;
   void wait(int milliseconds);
+  int get_score() const;
 };
 
 #endif

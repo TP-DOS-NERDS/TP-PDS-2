@@ -9,14 +9,14 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#include <unistd.h> 
+#include <unistd.h>
 
-Snake::Snake(Player p) : player(p), length(4), direction(3) {
-  init_board();
-  place_food();
+Snake::Snake(Player p) : player(p), length(4), direction(3), score(0) {
+    init_board();
+    place_food();
 }
 
-Snake::Snake(): player(Player("placeholder1", "placeholder1")), length(4), direction(3) {
+Snake::Snake(): player(Player("placeholder1", "placeholder1")), length(4), direction(3), score(0) {
   init_board();
   place_food();
 }
@@ -51,12 +51,14 @@ void Snake::place_food() {
 
 void Snake::print_board() const {
   system("clear"); 
+  std::cout << "Score: " << score << "\n"; 
   for (int i = 0; i < 22; ++i) {
     for (int j = 0; j < 22; ++j) {
       std::cout << board[i][j] << ' '; 
     }
     std::cout << '\n';
   }
+  std::cout << '\n';
 }
 
 bool Snake::move_snake(int dx, int dy) {
@@ -67,11 +69,12 @@ bool Snake::move_snake(int dx, int dy) {
     return false;
   }
 
-  if (board[new_x][new_y] == '$') { 
+  if (board[new_x][new_y] == '$') { // Food (or points)
     length++;
-//        player.increase_wins();
+//    player.increase_wins(GameId::snake);
     place_food();
   } else {
+    // Remove snake body
     board[snake[0][0]][snake[1][0]] = ' ';
     for (int i = 0; i < length - 1; ++i) {
       snake[0][i] = snake[0][i + 1];
@@ -79,11 +82,14 @@ bool Snake::move_snake(int dx, int dy) {
     }
   }
 
+  // Update snake head
   snake[0][length - 1] = new_x;
   snake[1][length - 1] = new_y;
 
+  // New snake head
   board[new_x][new_y] = '@';
 
+  // New snake body
   for (int i = 0; i < length - 1; ++i) {
     board[snake[0][i]][snake[1][i]] = '*';
   }
@@ -92,24 +98,39 @@ bool Snake::move_snake(int dx, int dy) {
   return true;
 }
 
+bool Snake::is_board_full() const {
+  for (int i = 1; i < 21; ++i) {
+    for (int j = 1; j < 21; ++j) {
+      if (board[i][j] == ' ') {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 bool Snake::is_game_over(int x, int y) const {
   return (x == 0 || x == 21 || y == 0 || y == 21 || board[x][y] == '*');
 }
 
+
 void Snake::move() {
-    int dx = 0, dy = 0;
+  int dx = 0, dy = 0;
 
-    switch (direction) {
-        case 0: dx = -1; dy = 0; break; // Up
-        case 1: dx = 1; dy = 0; break;  // Down
-        case 2: dx = 0; dy = -1; break; // Left
-        case 3: dx = 0; dy = 1; break;  // Right
-    }
+  switch (direction) {
+    case 0: dx = -1; dy = 0; break; // Up
+    case 1: dx = 1; dy = 0; break;  // Down
+    case 2: dx = 0; dy = -1; break; // Left
+    case 3: dx = 0; dy = 1; break;  // Right
+  }
 
-    if (!move_snake(dx, dy)) {
-        this->running=false;
-        sleep(2);
-    }
+  if (!move_snake(dx, dy)) {
+    std::cout << "Game Over! " << player.get_username() << " perdeu!\n";
+    this->running=false;
+    player.increase_defeats(GameId::snake);
+    sleep(2);
+    length = 0; 
+  }
 }
 
 bool Snake::is_game_over() const {
@@ -196,7 +217,10 @@ bool kbhit() {
 }
 
 void Snake::play() {
-  this->running = true; while (running) { if (kbhit()) { int key = get_key();
+  this->running = true; 
+  while (running) {
+    if (kbhit()) {
+      int key = get_key();
       if (key != EOF) { 
         switch (key) {
           case 0: 
@@ -214,9 +238,11 @@ void Snake::play() {
     if (!this->is_game_over()) {
       this->move(); 
     }
+    std::cout << 2 << std::endl;
     usleep(100000); 
   }
 
+  std::cout << 1 << std::endl;
   set_terminal_mode(false);
 }
 
@@ -225,3 +251,6 @@ int Snake::get_winner() {
   return 1;
 }
 
+int Snake::get_score() const {
+    return score;
+}
