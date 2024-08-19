@@ -16,15 +16,16 @@ public:
 
   std::vector<std::string> get_content() {
     std::vector<std::string> lines;
-    std::string line;
+    std::string str = string_buffer.str();
 
-    while (std::getline(string_buffer, line)) {
-        line.erase(line.begin(), std::find_if_not(line.begin(), line.end(), ::isspace));
-        line.erase(std::find_if_not(line.rbegin(), line.rend(), ::isspace).base(), line.end());
+    for(int i = 0; i < str.size(); i++) {
+      std::string current_str;
+      
+      for(; i < str.size() && str[i] != '\n'; i++) {
+        current_str.push_back(str[i]);
+      }
 
-        if (!line.empty()) {
-            lines.push_back(line);
-        }
+      if(!current_str.empty() && current_str != "Digite o comando que voce deseja executar: ") lines.push_back(current_str);
     }
 
     return lines;
