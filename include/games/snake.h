@@ -3,30 +3,39 @@
 
 #include <string>
 #include "../player.h"
+#include "../game.h"
 
-class Snake {
+class Snake : public Game {
 private:
-    Player player;
-    char board[22][22];
-    int snake[2][100];  // Snake coordinates
-    int length; // Snake size
-    int direction; // Snake direction
-    int food_x, food_y;
+  Player player;
+  char board[22][22];
+  int snake[2][100];  // Snake coordinates
+  int length; // Snake size
+  int direction; // Snake direction
+  int food_x, food_y;
+  bool running;
 
-    void init_board();
-    void place_food();
-    void print_board() const;
-    bool move_snake(int dx, int dy);
-    bool is_game_over(int x, int y) const;
+  void init_board();
+  void place_food();
+  void print_board() const;
+  bool move_snake(int dx, int dy);
+  bool is_game_over(int x, int y) const;
+  bool is_position_valid(std::pair<int,int> position);
+  bool game_ended();
+  void play_round();
+
 
 public:
-    Snake(Player player);
-    ~Snake();
+  Snake(Player player);
+  Snake();
+  ~Snake();
 
-    void move();
-    void change_direction(int new_direction);
-    bool is_game_over() const;
-    void wait(int milliseconds);
+  void play();
+  int get_winner();
+  void move();
+  void change_direction(int new_direction);
+  bool is_game_over() const;
+  void wait(int milliseconds);
 };
 
 #endif
