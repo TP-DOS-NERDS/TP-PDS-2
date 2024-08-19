@@ -10,6 +10,8 @@ Player::Player(std::string username, std::string name) {
   }
 }
 
+
+
 void Player::increase_wins(GameId game_id) {
   wins[game_id]++;
 }

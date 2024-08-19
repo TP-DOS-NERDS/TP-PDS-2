@@ -200,8 +200,3 @@ bool Lig4::is_position_valid(std::pair<int,int> position) {
 
   return true;
 }
-
-
-bool Lig4::is_position_set_by_current_player(std::pair<int,int> position) {
-  return board[position.first][position.second] == current_player;
-}
