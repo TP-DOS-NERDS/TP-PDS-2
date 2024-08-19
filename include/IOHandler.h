@@ -8,18 +8,35 @@
 #include <string>
 
 namespace IOHandler {
+/**
+ * @brief Lê um valor de um tipo T da entrada padrão.
+ *
+ * @return Retorna um valor do tipo T lido da entrada padrão.
+ */
   template <typename T>
   T get();
 
+/**
+ * @brief Imprime um valor de um tipo T na saída padrão.
+ */
   template <typename T>
   void print(const T& value);
 
+/**
+ * @brief Imprime os dados de um objeto do tipo Player na saída padrão.
+ */
   template <typename T>
   void print(const Player& player);
 
+/**
+ * @brief Imprime os dados de um vetor de ponteiro tipo Player na saída padrão.
+ */
   template <typename T>
   void print(const std::vector<const Player*>& players);
 
+/**
+ * @brief Imprime os dados de uma matriz de inteiros. 
+ */
   template <typename T>
   void print(const std::vector<std::vector<int>>& board);
 }
