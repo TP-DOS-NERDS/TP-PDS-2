@@ -26,6 +26,7 @@ void GameCenter::start_game_center() {
 }
 
 void GameCenter::execute_command() {
+  IOHandler::print("Digite o comando que voce deseja executar: ");
   std::string command = IOHandler::get<std::string>();
 
   if(command == Commands::REGISTER_PLAYER) {
@@ -76,7 +77,9 @@ void GameCenter::execute_command() {
     continue_game_center_execution = false;
   }
 
-  throw forbidden_action_exception(ErrorMessage::command_not_found);
+  else throw forbidden_action_exception(ErrorMessage::command_not_found);
+
+  IOHandler::print("\n");
 }
 
 void GameCenter::register_player() {
@@ -135,7 +138,8 @@ void GameCenter::execute_match() {
   int player_count = 2;
   if (game_id == GameId::minesweeper)
     player_count = 1;
-
+  else if (game_id == GameId::snake
+    player_count = 1;
 
   std::string player1_username = IOHandler::get<std::string>();
   std::string player2_username;
@@ -146,12 +150,13 @@ void GameCenter::execute_match() {
     throw forbidden_action_exception(ErrorMessage::game_not_found);
   }
 
-  if(!players.has(player1_username) || !players.has(player2_username)) {
+  if(!players.has(player1_username) || (need_2_players && !players.has(player2_username))) {
     throw forbidden_action_exception(ErrorMessage::player_not_found);
   }
 
   const int FIRST_PLAYER = 1;
   const int SECOND_PLAYER = 2;
+  IOHandler::print("Partida do jogo " + game_id_to_string(game_id) + ": \nPlayer 1: " + player1_username + "\nPlayer2: " + player2_username);
 
   Game* game;
   if(game_id == GameId::lig4) {
@@ -160,6 +165,12 @@ void GameCenter::execute_match() {
   }
   else if(game_id == GameId::minesweeper) {
     game = new Minesweeper();
+  if (game_id == GameId::reversi) {
+    game = new Reversi();
+    game->play();
+  }
+  if (game_id == GameId::snake) {
+    game = new Snake();
     game->play();
   }
 
@@ -173,13 +184,19 @@ void GameCenter::execute_match() {
     player1->increase_wins(game_id);
     if (player2 != nullptr)
       player2->increase_defeats(game_id);
+
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + "encerrado. Vencedor: " + player1_username);
   }
 
   else if(winner == SECOND_PLAYER) {
     if (player2 != nullptr)
       player2->increase_wins(game_id);
     player1->increase_defeats(game_id);
-  }
 
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Vencedor: " + player2_username);
+  }
+  else {
+    IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Empate");
+  }
   delete game;
 }

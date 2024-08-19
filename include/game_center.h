@@ -8,6 +8,8 @@
 #include "game.h"
 #include "./games/lig4.h"
 #include "./games/minesweeper.h"
+#include "./games/reversi.h"
+#include "./games/snake.h"
 #include <algorithm>
 
 class Commands {
