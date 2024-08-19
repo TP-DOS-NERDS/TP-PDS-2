@@ -12,6 +12,9 @@ namespace IOHandler {
   T get();
 
   template <typename T>
+  std::string get_line();
+
+  template <typename T>
   void print(const T& value);
 
   template <typename T>
@@ -29,6 +32,14 @@ T IOHandler::get() {
   T value;
   std::cin >> value;
   return value;
+}
+
+template <typename T>
+std::string IOHandler::get_line() {
+  std::string string;
+  std::getline(std::cin, string);
+
+  return string;
 }
 
 template <typename T>

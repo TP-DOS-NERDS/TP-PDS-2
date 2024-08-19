@@ -115,7 +115,7 @@ TEST_SUITE("game center tests") {
       game_center.start_game_center();
 
       std::vector<std::string> output = cout_redirector.get_content();
-      
+
       std::vector<std::string> expected_output = {"Jogador er3n cadastrado com sucesso", "Jogador mik4sa cadastrado com sucesso", "er3n eren", "lig4: - V: 0 D: 0", "reversi: - V: 0 D: 0", "mik4sa mikasa", "lig4: - V: 0 D: 0", "reversi: - V: 0 D: 0" };
 
       CHECK(output == expected_output);
@@ -129,7 +129,7 @@ TEST_SUITE("game center tests") {
       game_center.start_game_center();
 
       std::vector<std::string> output = cout_redirector.get_content();
-      
+
       std::vector<std::string> expected_output = {"Jogador er3n cadastrado com sucesso", "Jogador mik4sa cadastrado com sucesso", "mik4sa ackerman", "lig4: - V: 0 D: 0", "reversi: - V: 0 D: 0", "er3n eren", "lig4: - V: 0 D: 0", "reversi: - V: 0 D: 0" };
 
       CHECK(output == expected_output);
@@ -143,7 +143,7 @@ TEST_SUITE("game center tests") {
       game_center.start_game_center();
 
       std::vector<std::string> output = cout_redirector.get_content();
-      
+
       std::vector<std::string> expected_output = { "Erro: Criterio de ordenacao de jogadores invalido" };
 
       CHECK(output == expected_output);
@@ -157,7 +157,7 @@ TEST_SUITE("game center tests") {
       game_center.start_game_center();
 
       std::vector<std::string> output = cout_redirector.get_content();
-      
+
       std::vector<std::string> expected_output = {  };
 
       CHECK(output == expected_output);

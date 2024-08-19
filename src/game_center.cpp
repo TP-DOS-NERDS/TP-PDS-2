@@ -84,8 +84,9 @@ void GameCenter::execute_command() {
 
 void GameCenter::register_player() {
   std::string username = IOHandler::get<std::string>();
-  std::string name = IOHandler::get<std::string>();
- 
+  std::string name = IOHandler::get_line<std::string>();
+  name.erase(0, 1);
+
   if(players.has(username)) {
     throw forbidden_action_exception(ErrorMessage::player_id_already_taken);
   }
