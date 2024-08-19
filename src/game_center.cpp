@@ -134,21 +134,25 @@ void GameCenter::list_players() {
 void GameCenter::execute_match() {
   std::string game_name = IOHandler::get<std::string>();
   std::string player1_username = IOHandler::get<std::string>();
-  std::string player2_username = IOHandler::get<std::string>(); 
+  GameId game_id = string_to_game_id(game_name);
+
+  bool need_2_players = game_id != GameId::snake;
+  std::string player2_username;
+
+  if (need_2_players) {
+    player2_username=IOHandler::get<std::string>();
+  }
 
   if(!game_exists(game_name)) {
     throw forbidden_action_exception(ErrorMessage::game_not_found);
   }
 
-  if(!players.has(player1_username) || !players.has(player2_username)) {
+  if(!players.has(player1_username) || (need_2_players && !players.has(player2_username))) {
     throw forbidden_action_exception(ErrorMessage::player_not_found);
   }
 
-  GameId game_id = string_to_game_id(game_name);
-
   const int FIRST_PLAYER = 1;
   const int SECOND_PLAYER = 2;
-
   IOHandler::print("Partida do jogo " + game_id_to_string(game_id) + ": \nPlayer 1: " + player1_username + "\nPlayer2: " + player2_username);
 
   Game* game;
@@ -156,7 +160,16 @@ void GameCenter::execute_match() {
     game = new Lig4();
     game->play();
   }
+  if (game_id == GameId::reversi) {
+    game = new Reversi();
+    game->play();
+  }
+  if (game_id == GameId::snake) {
+    game = new Snake();
+    game->play();
+  }
 
+  std::cout << "1" << std::endl;
   int winner = game->get_winner();
   Player* player1 = players.get(player1_username);
   Player* player2 = players.get(player2_username);

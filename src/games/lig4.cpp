@@ -61,7 +61,7 @@ int Lig4::get_valid_move_input() {
 
   while(move_input_is_invalid) {
     std::string move_input = IOHandler::get<std::string>();
-
+//
     try {
       validate_move_input(move_input);
       move_input_is_invalid = false;
