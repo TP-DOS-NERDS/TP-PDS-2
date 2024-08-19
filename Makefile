@@ -44,10 +44,13 @@ ${OBJ_DIR}/IOHandler_tests.o: ${TESTS_DIR}/IOHandler_tests.cpp ${INCLUDE_DIR}/IO
 ${OBJ_DIR}/lig4_tests.o: ${TESTS_DIR}/lig4_tests.cpp ${INCLUDE_DIR}/IOHandler.h ${TESTS_DIR}/CinRedirector.h ${TESTS_DIR}/CoutRedirector.h
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
+${OBJ_DIR}/reversi_tests.o: ${TESTS_DIR}/reversi_tests.cpp ${INCLUDE_DIR}/IOHandler.h ${TESTS_DIR}/CinRedirector.h ${TESTS_DIR}/CoutRedirector.h ${INCLUDE_DIR}/games/reversi.h
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
+
 ${OBJ_DIR}/game_center_tests.o : ${TESTS_DIR}/game_center_tests.cpp ${INCLUDE_DIR}/game_center.h ${INCLUDE_DIR}/forbidden_action_exception.h ${TESTS_DIR}/CinRedirector.h ${TESTS_DIR}/CoutRedirector.h
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-main: ${OBJ_DIR}/lig4_tests.o ${OBJ_DIR}/IOHandler_tests.o ${OBJ_DIR}/player_tests.o ${OBJ_DIR}/game_center_tests.o ${OBJ_DIR}/game_ids_tests.o ${OBJ_DIR}/player_repository_tests.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o ${OBJ_DIR}/lig4.o 
+main: ${OBJ_DIR}/reversi_tests.o ${OBJ_DIR}/lig4_tests.o ${OBJ_DIR}/IOHandler_tests.o ${OBJ_DIR}/player_tests.o ${OBJ_DIR}/game_center_tests.o ${OBJ_DIR}/game_ids_tests.o ${OBJ_DIR}/player_repository_tests.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o ${OBJ_DIR}/lig4.o 
 	${CC} ${FLAGS} -o $@ $^ -I ${INCLUDE_DIR}
 
 else
