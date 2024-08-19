@@ -7,7 +7,6 @@
 #include "game_ids.h"
 
 
-
 class Player {
 private:
   std::string username;
