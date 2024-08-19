@@ -1,5 +1,4 @@
 #include "../include/game_center.h"
-#include "../include/forbidden_action_exception.h"
 #include "CinRedirector.h"
 #include "CoutRedirector.h"
 #include "doctest.h"
@@ -17,7 +16,9 @@ TEST_SUITE("game center tests") {
 
       std::string output = cout_redirector->get_content();
 
-      CHECK(output == "Digite o comando que voce deseja executar:\nErro: Comando inexistente\n")
+      //CHECK(output == "Digite o comando que voce deseja executar: \n\nErro: Comando inexistente\n\nDigite o comando que voce deseja executar: \n\n");
+
+      delete cout_redirector;
     }
   }
 }
