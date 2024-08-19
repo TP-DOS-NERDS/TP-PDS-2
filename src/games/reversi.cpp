@@ -199,7 +199,7 @@ void Reversi::after_move() {
 void Reversi::move(int x, int y) {
   if (!valid_move(x, y)) {
     // excessao de movimento invalido
-    IOHandler::print("MOVIMENTO NAO PERMITIDO NA POSICAO " + ("(" + std::to_string(x) +", "+ std::to_string(y) + ")")); 
+    IOHandler::print("MOVIMENTO NAO PERMITIDO NA POSICAO " + ("(" + std::to_string(x+1) +", "+ std::to_string(y+1) + ")")); 
     return;
   }
 

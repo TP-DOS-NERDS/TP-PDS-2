@@ -169,12 +169,13 @@ void GameCenter::execute_match() {
   else if(game_id == GameId::minesweeper) {
     game = new Minesweeper();
     game->play();
-  if (game_id == GameId::reversi) {
+  }
+  else if (game_id == GameId::reversi) {
     game = new Reversi();
     game->play();
   }
-  if (game_id == GameId::snake) {
-    //game = new Snake();
+  else if (game_id == GameId::snake) {
+    game = new Snake();
     game->play();
   }
 
@@ -202,6 +203,6 @@ void GameCenter::execute_match() {
   else {
     IOHandler::print("Jogo de " + game_id_to_string(game_id) + " encerrado. Empate");
   }
+
   delete game;
-  }
 }
