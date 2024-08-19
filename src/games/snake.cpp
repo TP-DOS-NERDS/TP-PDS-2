@@ -2,9 +2,9 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#include <unistd.h> 
+#include <unistd.h>
 
-Snake::Snake(Player p) : player(p), length(4), direction(3) {
+Snake::Snake(Player p) : player(p), length(4), direction(3), score(0) {
     init_board();
     place_food();
 }
@@ -39,6 +39,7 @@ void Snake::place_food() {
 
 void Snake::print_board() const {
     system("clear"); 
+    std::cout << "Score: " << score << "\n"; 
     for (int i = 0; i < 22; ++i) {
         for (int j = 0; j < 22; ++j) {
             std::cout << board[i][j] << ' '; 
@@ -57,7 +58,7 @@ bool Snake::move_snake(int dx, int dy) {
 
     if (board[new_x][new_y] == '$') { 
         length++;
-        player.increase_wins();
+        score++;
         place_food();
     } else {
         board[snake[0][0]][snake[1][0]] = ' ';
@@ -77,6 +78,25 @@ bool Snake::move_snake(int dx, int dy) {
     }
 
     print_board();
+
+    if (is_board_full()) { 
+        std::cout << "Parabens, " << player.get_username() << " venceu!\n";
+        player.increase_wins();
+        sleep(2);
+        return false;
+    }
+
+    return true;
+}
+
+bool Snake::is_board_full() const {
+    for (int i = 1; i < 21; ++i) {
+        for (int j = 1; j < 21; ++j) {
+            if (board[i][j] == ' ') {
+                return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -96,7 +116,9 @@ void Snake::move() {
 
     if (!move_snake(dx, dy)) {
         std::cout << "Game Over! " << player.get_username() << " perdeu!\n";
+        player.increase_defeats();
         sleep(2);
+        length = 0; 
     }
 }
 
@@ -119,4 +141,8 @@ void Snake::change_direction(int new_direction) {
 
 void Snake::wait(int milliseconds) {
     usleep(milliseconds * 1000);
+}
+
+int Snake::get_score() const {
+    return score;
 }
