@@ -8,21 +8,48 @@
 #include <string>
 
 namespace IOHandler {
+/**
+ * @brief Lê um valor de um tipo T da entrada padrão.
+ *
+ * @return Retorna um valor do tipo T lido da entrada padrão.
+ */
   template <typename T>
   T get();
 
+/**
+ * @brief Imprime um valor de um tipo T na saída padrão.
+ */
   template <typename T>
   void print(const T& value);
 
+/**
+ * @brief Imprime os dados de um objeto do tipo Player na saída padrão.
+ */
   template <typename T>
   void print(const Player& player);
 
+/**
+ * @brief Imprime os dados de um vetor de ponteiro tipo Player na saída padrão.
+ */
   template <typename T>
   void print(const std::vector<const Player*>& players);
 
+/**
+ * @brief Imprime os dados de uma matriz de inteiros. 
+ */
   template <typename T>
   void print(const std::vector<std::vector<int>>& board);
+
+  template <typename T>
+  void print(const std::vector<std::string>& board);
+
+  template <typename T>
+  void print_players(const std::vector<const Player*>& players);
+
+  template <typename T>
+  void print_board(const std::vector<std::vector<int>>& board);
 }
+
 
 template <typename T>
 T IOHandler::get() {
@@ -70,6 +97,45 @@ void IOHandler::print(const std::vector<std::vector<int>>& board) {
   }
 }
 
+template <typename T>
+void IOHandler::print(const std::vector<std::string>& board) {
+  const int EMPTY_SPACE = 0;
+  const std::string horizontal_line = std::string(30, '-');
+
+  for(int i = 0; i < board.size(); i++) {
+    std::string row = "| ";
+    for(int j = 0; j < board[i].size(); j++) {
+      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j]);
+      row += " | ";
+    }
+
+    std::cout << row << std::endl;
+    std::cout << horizontal_line << std::endl;
+  }
+}
+template <typename T>
+void IOHandler::print_board(const std::vector<std::vector<int>>& board) {
+  const int EMPTY_SPACE = 0;
+  const std::string horizontal_line = std::string(board[0].size() * 4, '-');
+
+  for(int i = 0; i < board.size(); i++) {
+    std::string row = "| ";
+    for(int j = 0; j < board[i].size(); j++) {
+      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j]);
+      row += " | ";
+    }
+
+    std::cout << row << std::endl;
+    std::cout << horizontal_line << std::endl;
+  }
+}
+template <typename T>
+void IOHandler::print_players(const std::vector<const Player*>& players) {
+  for(auto player : players) {
+    print<Player>(*player);
+    std::cout << std::endl;
+  }
+}
+
 
 #endif
-

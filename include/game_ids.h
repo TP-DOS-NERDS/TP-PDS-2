@@ -6,8 +6,11 @@
 #include <unordered_map>
 
 enum class GameId {
+    not_found = -1,
     lig4 = 0,
-    reversi = 1
+    reversi = 1,
+    minesweeper = 2,
+    snake = 3
 };
 
 /**

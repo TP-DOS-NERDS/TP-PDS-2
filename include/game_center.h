@@ -7,6 +7,9 @@
 #include "forbidden_action_exception.h"
 #include "game.h"
 #include "./games/lig4.h"
+#include "./games/minesweeper.h"
+#include "./games/reversi.h"
+#include "./games/snake.h"
 #include <algorithm>
 
 class Commands {
@@ -21,17 +24,47 @@ class Commands {
 
 class GameCenter {
 public:
+/**
+ * @brief Instancia um objeto do tipo GameCenter.
+ *
+ * @return Um objeto do tipo GameCenter. 
+ */
   GameCenter();
+
+/**
+ * @brief Inicia o sistema.
+ */
   void start_game_center();
-  void execute_match();
+
+
 
 private:
   PlayersRepository players;  
   bool continue_game_center_execution;
-  
+
+ /**
+ * @brief Executa um comando.
+ */
   void execute_command();
+
+ /**
+ * @brief Inicia uma partida.
+ */ 
+
+  void execute_match();
+ /**
+ * @brief Registra um jogador.
+ */ 
   void register_player();
+
+ /**
+ * @brief Remove o registro de um jogador.
+ */
   void unregister_player();
+
+ /**
+ * @brief Lista os jogadores registrados.
+ */
   void list_players();
 };
 
