@@ -29,6 +29,6 @@ TEST_SUITE("IOHandler") {
 
     std::string string = IOHandler::get<std::string>();
 
-    CHECK(string == "123456\n");
+    CHECK(string == "123456");
   }  
 }

@@ -26,7 +26,9 @@ ${OBJ_DIR}/player_repository_tests.o: tests/player_repository_tests.cpp
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 ${OBJ_DIR}/game_ids_tests.o: tests/game_ids_tests.cpp
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
-main: ${OBJ_DIR}/player_tests.o ${OBJ_DIR}/game_ids_tests.o ${OBJ_DIR}/player_repository_tests.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o 
+${OBJ_DIR}/IOHandler_tests.o: tests/IOHandler_tests.cpp
+	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
+main: ${OBJ_DIR}/IOHandler_tests.o ${OBJ_DIR}/player_tests.o ${OBJ_DIR}/game_ids_tests.o ${OBJ_DIR}/player_repository_tests.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o 
 	${CC} ${FLAGS} -o $@ $^ -I ${INCLUDE_DIR}
 
 else
