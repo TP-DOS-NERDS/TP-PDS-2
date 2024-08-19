@@ -79,7 +79,7 @@ bool Snake::move_snake(int dx, int dy) {
 
     print_board();
 
-    if (is_board_full()) { 
+    if (is_board_full()) {
         std::cout << "Parabens, " << player.get_username() << " venceu!\n";
         player.increase_wins();
         sleep(2);
