@@ -4,10 +4,10 @@
 TEST_SUITE("game_ids") {
   TEST_CASE("id to string") {
     SUBCASE("lig4") {
-      CHECK(game_id_to_string(GameId::lig4) == "LIG4");
+      CHECK(game_id_to_string(GameId::lig4) == "lig4");
     }
     SUBCASE("reversi") {
-      CHECK(game_id_to_string(GameId::reversi) == "REVERSI");
+      CHECK(game_id_to_string(GameId::reversi) == "reversi");
     }
   }
   TEST_CASE("get all ids") {
