@@ -84,7 +84,7 @@ void GameCenter::execute_command() {
 
 void GameCenter::register_player() {
   std::string username = IOHandler::get<std::string>();
-  std::string name = IOHandler::get_line<std::string>();
+  std::string name = IOHandler::get<std::string>();
  
   if(players.has(username)) {
     throw forbidden_action_exception(ErrorMessage::player_id_already_taken);
@@ -150,7 +150,10 @@ void GameCenter::execute_match() {
     throw forbidden_action_exception(ErrorMessage::game_not_found);
   }
 
-  if(!players.has(player1_username) || (!players.has(player2_username))) {
+  if(!players.has(player1_username)) {
+    throw forbidden_action_exception(ErrorMessage::player_not_found);
+  }
+  else if(player_count == 2 && (!players.has(player2_username))) {
     throw forbidden_action_exception(ErrorMessage::player_not_found);
   }
 
@@ -165,12 +168,13 @@ void GameCenter::execute_match() {
   }
   else if(game_id == GameId::minesweeper) {
     game = new Minesweeper();
+    game->play();
   if (game_id == GameId::reversi) {
     game = new Reversi();
     game->play();
   }
   if (game_id == GameId::snake) {
-    game = new Snake();
+    //game = new Snake();
     game->play();
   }
 

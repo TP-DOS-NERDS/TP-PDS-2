@@ -1,7 +1,6 @@
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
 
-
 #include "../game.h"
 #include "../IOHandler.h"
 #include <vector>
@@ -17,7 +16,7 @@ public:
 
 private:
   std::vector<std::vector<int>> bombs;
-  std::vector<std::vector<int>> board; // 78 = ~ | 22 = F
+  std::vector<std::vector<int>> board; // 126 = ~ | 70 = F
   bool game_over = false;
   int board_size = 20;
   int winner = 2; // Loss

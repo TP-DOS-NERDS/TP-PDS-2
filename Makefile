@@ -27,8 +27,8 @@ ${OBJ_DIR}/lig4.o: ${SRC_DIR}/games/lig4.cpp ${INCLUDE_DIR}/games/lig4.h ${INCLU
 ${OBJ_DIR}/reversi.o: ${SRC_DIR}/games/reversi.cpp ${INCLUDE_DIR}/games/reversi.h ${INCLUDE_DIR}/game.h ${INCLUDE_DIR}/IOHandler.h
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-${OBJ_DIR}/snake.o: ${SRC_DIR}/games/snake.cpp ${INCLUDE_DIR}/games/snake.h ${INCLUDE_DIR}/game.h ${INCLUDE_DIR}/IOHandler.h
-	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
+#${OBJ_DIR}/snake.o: ${SRC_DIR}/games/snake.cpp ${INCLUDE_DIR}/games/snake.h ${INCLUDE_DIR}/game.h ${INCLUDE_DIR}/IOHandler.h
+#	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
 ${OBJ_DIR}/game_center.o: ${SRC_DIR}/game_center.cpp ${INCLUDE_DIR}/game_center.h ${INCLUDE_DIR}/game.h  ${INCLUDE_DIR}/games/lig4.h ${INCLUDE_DIR}/player_repository.h ${INCLUDE_DIR}/player.h ${INCLUDE_DIR}/IOHandler.h
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
@@ -36,7 +36,7 @@ ${OBJ_DIR}/game_center.o: ${SRC_DIR}/game_center.cpp ${INCLUDE_DIR}/game_center.
 ${OBJ_DIR}/main.o: ${SRC_DIR}/main.cpp ${INCLUDE_DIR}/game_center.h 
 	${CC} ${FLAGS} -o $@ -c $< -I ${INCLUDE_DIR}
 
-main:	${OBJ_DIR}/main.o ${OBJ_DIR}/snake.o ${OBJ_DIR}/reversi.o ${OBJ_DIR}/minesweeper.o ${OBJ_DIR}/lig4.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o
+main:	${OBJ_DIR}/main.o ${OBJ_DIR}/reversi.o ${OBJ_DIR}/minesweeper.o ${OBJ_DIR}/lig4.o ${OBJ_DIR}/game_center.o ${OBJ_DIR}/player_repository.o ${OBJ_DIR}/player.o ${OBJ_DIR}/game_ids.o
 	${CC} ${FLAGS} -o $@ $^ -I ${INCLUDE_DIR}
 
 clean:

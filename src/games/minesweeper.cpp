@@ -5,7 +5,7 @@
 Minesweeper::Minesweeper() : Game() {
   for (int i = 0; i < board_size; i++) {
     bombs.push_back(std::vector<int>(board_size, 0));
-    board.push_back(std::vector<int>(board_size, 78));
+    board.push_back(std::vector<int>(board_size, 126));
   }
 }
 
@@ -17,12 +17,14 @@ void Minesweeper::play() {
   x = IOHandler::get<int>();
   IOHandler::print("Y: ");
   y = IOHandler::get<int>();
+  x--; y--;
 
   while (!is_position_valid({x, y})) {
     IOHandler::print("Posicao Invalida! Tente Novamente.\nX: ");
     x = IOHandler::get<int>();
     IOHandler::print("Y: ");
     y = IOHandler::get<int>();
+    x--; y--;
   }
   first_move(x, y);
 
@@ -49,17 +51,17 @@ void Minesweeper::play_round() {
       reveal_tile(x, y);
 
     // Press on a number (Reveal neraby tiles without flags)
-    else if (bombs[x][y] == -2 && board[x][y] >= 1 && board[x][y] <= 8) {
+    else if (bombs[x][y] == -2 && board[x][y] >= '1' && board[x][y] <= '8') {
 
       // Reveal only if there are enough flags pointed by the number
-      if (board[x][y] == count_close_flags(x, y)) {
+      if (board[x][y] - '0' == count_close_flags(x, y)) {
 
         for (int i = x - 1; i <= x + 1; i++) {
           for (int j = y - 1; j <= y + 1; j++) {
             if (!is_position_valid({i, j}))
               continue;
             // Dont reveal if tile is flaged or revealed already
-            if (board[i][j] == 22 || bombs[i][j] == -2)
+            if (board[i][j] == 70 || bombs[i][j] == -2)
               continue;
             reveal_tile(i, j);
           }
@@ -80,7 +82,7 @@ std::pair<char,std::pair<int, int>> Minesweeper::take_input() {
   char opcao;
   IOHandler::print("R para revelar uma casa / F cara colocar uma bandeira: ");
   opcao = IOHandler::get<char>();
-  while (opcao != 'R' || opcao != 'r' || opcao != 'F' || opcao != 'f') {
+  while (opcao != 'R' && opcao != 'r' && opcao != 'F' && opcao != 'f') {
     IOHandler::print("Opcao Invalida! Tente Novamente.");
     IOHandler::print("R para revelar uma casa / F cara colocar uma bandeira: ");
     opcao = IOHandler::get<char>();
@@ -91,12 +93,14 @@ std::pair<char,std::pair<int, int>> Minesweeper::take_input() {
   x = IOHandler::get<int>();
   IOHandler::print("Y: ");
   y = IOHandler::get<int>();
+  x--; y--;
 
   while (!is_position_valid({x, y})) {
     IOHandler::print("Posicao Invalida! Tente Novamente.\nX: ");
     x = IOHandler::get<int>();
     IOHandler::print("Y: ");
     y = IOHandler::get<int>();
+    x--; y--;
   }
 
   return {opcao, {x, y}};
@@ -114,7 +118,7 @@ int Minesweeper::get_remaining_tiles() {
 
 void Minesweeper::reveal_tile(int x, int y) {
   int tile = bombs[x][y];
-
+  
   // Reveal an empty tile (and its neighbours)
   if (tile == 0) {
     bombs[x][y] = -2;
@@ -123,12 +127,13 @@ void Minesweeper::reveal_tile(int x, int y) {
 
     for (int i = x - 1; i <= x + 1; i++)
       for (int j = y - 1; j <= y + 1; j++)
-        reveal_tile(i, j);
+        if (is_position_valid({i, j}))
+          reveal_tile(i, j);
   }
 
   // Reveal an number
   else if (tile >= 1 && tile <= 8) {
-    board[x][y] = bombs[x][y];
+    board[x][y] = bombs[x][y] + '0';
     bombs[x][y] = -2;
     remaining_tiles--;
   }
@@ -143,12 +148,12 @@ void Minesweeper::reveal_tile(int x, int y) {
 
 void Minesweeper::place_flag(int x, int y) {
   // Remove if placed already
-  if (board[x][y] == 22)
-    board[x][y] = 78;
+  if (board[x][y] == 70)
+    board[x][y] = 126;
 
   // Place otherwise
   else if (bombs[x][y] != -2)
-    board[x][y] = 22;
+    board[x][y] = 70;
 }
 
 bool Minesweeper::is_position_valid(std::pair<int, int> position) {
@@ -203,21 +208,21 @@ int Minesweeper::count_close_flags(int x, int y) {
   for (int i = x - 1; i <= x + 1; i++)
     for (int j = y - 1; j <= y + 1; j++)
       if (is_position_valid({i, j}))
-        if (board[i][j] == 22)
+        if (board[i][j] == 70)
           amount++;
   return amount;
 }
 
 void Minesweeper::lose() {
-  IOHandler::print(board);
-  IOHandler::print("You lose!\n");
+  IOHandler::print_board<std::vector<std::vector<int>>>(board);
+  IOHandler::print("Voce perdeu!\n");
 
   game_over = true;
 }
 
 void Minesweeper::win() {
-  IOHandler::print(board);
-  IOHandler::print("You win!\n");
+  IOHandler::print_board<std::vector<std::vector<int>>>(board);
+  IOHandler::print("Voce ganhou!\n");
   winner = 1;
 
   game_over = true;
