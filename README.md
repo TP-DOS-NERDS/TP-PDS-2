@@ -38,10 +38,10 @@ A cada jogada, deve-se checar se o jogo acabou.
 
 Esse processo se repete até acabar o jogo.
 
-  Algoritmo para Reversi e Lig4:
+  Algoritmo para Lig4:
   -
   
-  Caso o usuário queira usar o algoritmo para sugerir jogadas, ele deve chamar a função "Suggest_play_reversi" ou "Suggest_play_lig4".
+  Caso o usuário queira usar o algoritmo para sugerir jogadas, ele deve chamar a função "Suggest_play_lig4".
   
   Ao chamar a função, um dos parâmetros usados é um inteiro "n" que serve como número de jogadas que a função testa.
   
