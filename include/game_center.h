@@ -7,6 +7,8 @@
 #include "forbidden_action_exception.h"
 #include "game.h"
 #include "./games/lig4.h"
+#include "./games/reversi.h"
+#include "./games/snake.h"
 #include <algorithm>
 
 class Commands {
@@ -33,6 +35,10 @@ private:
   void register_player();
   void unregister_player();
   void list_players();
+
+
+  void execute_multiplayer_match(GameId game_id, Player* player1, Player* player2);
+  void execute_single_player_match(GameId game_id, Player* player); 
 };
 
 #endif
