@@ -8,8 +8,8 @@
 #include "game.h"
 #include "./games/lig4.h"
 #include "./games/minesweeper.h"
-#include "./games/reversi.h"
 #include "./games/snake.h"
+#include "./games/reversi.h"
 #include <algorithm>
 
 class Commands {
@@ -35,8 +35,6 @@ public:
  * @brief Inicia o sistema.
  */
   void start_game_center();
-
-
 
 private:
   PlayersRepository players;  
@@ -66,6 +64,10 @@ private:
  * @brief Lista os jogadores registrados.
  */
   void list_players();
+
+
+  void execute_multiplayer_match(GameId game_id, Player* player1, Player* player2);
+  void execute_single_player_match(GameId game_id, Player* player); 
 };
 
 #endif

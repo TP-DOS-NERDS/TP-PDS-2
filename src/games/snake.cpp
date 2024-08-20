@@ -1,5 +1,4 @@
 #include "../../include/games/snake.h"
-#include "../../include/player.h"
 
 #include <iostream>
 #include <termios.h>
@@ -11,14 +10,12 @@
 #include <cstdlib>
 #include <unistd.h>
 
-Snake::Snake(Player p) : player(p), length(4), direction(3), score(0) {
-    init_board();
-    place_food();
-}
 
-Snake::Snake(): player(Player("placeholder1", "placeholder1")), length(4), direction(3), score(0) {
+Snake::Snake(): length(4), direction(3), score(0) {
+  board = std::vector<std::vector<char>>(22, std::vector<char>(22));
   init_board();
   place_food();
+  TerminalHandler::set_new_terminal_configuration();
 }
 
 void Snake::init_board() {
@@ -52,13 +49,8 @@ void Snake::place_food() {
 void Snake::print_board() const {
   system("clear"); 
   std::cout << "Score: " << score << "\n"; 
-  for (int i = 0; i < 22; ++i) {
-    for (int j = 0; j < 22; ++j) {
-      std::cout << board[i][j] << ' '; 
-    }
-    std::cout << '\n';
-  }
-  std::cout << '\n';
+
+  IOHandler::print<std::vector<std::vector<char>>>(board);
 }
 
 bool Snake::move_snake(int dx, int dy) {
@@ -71,17 +63,12 @@ bool Snake::move_snake(int dx, int dy) {
 
   if (board[new_x][new_y] == '$') { // Food (or points)
     length++;
-//    player.increase_wins(GameId::snake);
     place_food();
   } else {
-    // Remove snake body
     board[snake[0][0]][snake[1][0]] = ' ';
     for (int i = 0; i < length - 1; ++i) {
       snake[0][i] = snake[0][i + 1];
-      snake[1][i] = snake[1][i + 1];
-    }
-  }
-
+      snake[1][i] = snake[1][i + 1]; } }
   // Update snake head
   snake[0][length - 1] = new_x;
   snake[1][length - 1] = new_y;
@@ -125,9 +112,8 @@ void Snake::move() {
   }
 
   if (!move_snake(dx, dy)) {
-    std::cout << "Game Over! " << player.get_username() << " perdeu!\n";
+    IOHandler::print("Game Over !");
     this->running=false;
-    player.increase_defeats(GameId::snake);
     sleep(2);
     length = 0; 
   }
@@ -138,6 +124,7 @@ bool Snake::is_game_over() const {
 }
 
 Snake::~Snake() {
+  TerminalHandler::reset_terminal_configuration();
 }
 
 void Snake::change_direction(int new_direction) {
@@ -153,7 +140,6 @@ void Snake::wait(int milliseconds) {
   usleep(milliseconds * 1000);
 }
 
-// unused
 bool Snake::is_position_valid(std::pair<int,int> position) {
   return true;
 }
@@ -163,7 +149,6 @@ bool Snake::game_ended() {
 }
 
 void Snake::play_round() {
-  this->play();
 }
 
 void set_terminal_mode(bool enable) {
@@ -183,10 +168,10 @@ int get_key() {
   if (ch == 27) { // Esc
     getchar(); 
     switch (getchar()) {
-      case 'A': return 0; // Up
-      case 'B': return 1; // Down
-      case 'C': return 3; // Right
-      case 'D': return 2; // Left
+      case 'A': return 0;
+      case 'B': return 1;
+      case 'C': return 3;
+      case 'D': return 2;
     }
   }
   return ch;
@@ -238,17 +223,14 @@ void Snake::play() {
     if (!this->is_game_over()) {
       this->move(); 
     }
-    std::cout << 2 << std::endl;
     usleep(100000); 
   }
 
-  std::cout << 1 << std::endl;
   set_terminal_mode(false);
 }
 
-// single player. then, if there is a winner, it has to be one
 int Snake::get_winner() {
-  return 1;
+  return score >= 30 ? 1 : 0;
 }
 
 int Snake::get_score() const {

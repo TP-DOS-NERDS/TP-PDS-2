@@ -21,6 +21,9 @@ namespace IOHandler {
  * @brief Imprime um valor de um tipo T na saída padrão.
  */
   template <typename T>
+  std::string get_line();
+
+  template <typename T>
   void print(const T& value);
 
 /**
@@ -49,6 +52,12 @@ namespace IOHandler {
 
   template <typename T>
   void print_board(const std::vector<std::vector<int>>& board);
+
+  template <typename T>
+  void print_board_plus_zero(const std::vector<std::vector<int>>& board);
+
+  template <typename T>
+  void print(const std::vector<std::vector<char>>& board); 
 }
 
 
@@ -61,6 +70,14 @@ T IOHandler::get() {
     return T();
   }
   return value;
+}
+
+template <typename T>
+std::string IOHandler::get_line() {
+  std::string string;
+  std::getline(std::cin, string);
+
+  return string;
 }
 
 template <typename T>
@@ -105,7 +122,7 @@ void IOHandler::print(const std::vector<std::vector<int>>& board) {
 template <typename T>
 void IOHandler::print(const std::vector<std::string>& board) {
   const int EMPTY_SPACE = 0;
-  const std::string horizontal_line = std::string(30, '-');
+  const std::string horizontal_line = std::string(34, '-');
 
   for(int i = 0; i < board.size(); i++) {
     std::string row = "| ";
@@ -135,6 +152,22 @@ void IOHandler::print_board(const std::vector<std::vector<int>>& board) {
   }
 }
 template <typename T>
+void IOHandler::print_board_plus_zero(const std::vector<std::vector<int>>& board) {
+  const int EMPTY_SPACE = 0;
+  const std::string horizontal_line = std::string(board[0].size() * 4, '-');
+
+  for(int i = 0; i < board.size(); i++) {
+    std::string row = "| ";
+    for(int j = 0; j < board[i].size(); j++) {
+      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j] + '0');
+      row += " | ";
+    }
+
+    std::cout << row << std::endl;
+    std::cout << horizontal_line << std::endl;
+  }
+}
+template <typename T>
 void IOHandler::print_players(const std::vector<const Player*>& players) {
   for(auto player : players) {
     print<Player>(*player);
@@ -142,5 +175,16 @@ void IOHandler::print_players(const std::vector<const Player*>& players) {
   }
 }
 
+template <typename T>
+void IOHandler::print(const std::vector<std::vector<char>>& board) {
+  for (int i = 0; i < 22; ++i) {
+    std::string row;
+    for (int j = 0; j < 22; ++j) {
+      std::cout << board[i][j] << ' '; 
+    }
+    std::cout << '\n';
+  }
+  std::cout << '\n';
+}
 
 #endif

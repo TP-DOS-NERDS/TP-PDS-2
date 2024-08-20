@@ -5,7 +5,6 @@ std::string game_id_to_string(GameId id) {
   else if(id == GameId::minesweeper) return "minesweeper";
   else if(id == GameId::reversi) return "reversi";
   else if(id == GameId::snake) return "snake";
-
   return "";
 }
 

@@ -44,7 +44,7 @@ void Lig4::play() {
 
 
 void Lig4::play_round() {
-  IOHandler::print_board<std::vector<std::vector<int>>>(board);
+  IOHandler::print_board_plus_zero<std::vector<std::vector<int>>>(board);
 
   int column_index = get_valid_move_input();
   execute_move(column_index);  

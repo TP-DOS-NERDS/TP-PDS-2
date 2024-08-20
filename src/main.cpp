@@ -1,7 +1,7 @@
 #include "../include/game_center.h" 
 
 int main() {
-  GameCenter gc = GameCenter(); 
+  GameCenter gc; 
 
   gc.start_game_center();
 

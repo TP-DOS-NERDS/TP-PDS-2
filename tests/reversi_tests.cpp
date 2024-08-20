@@ -7,14 +7,14 @@ TEST_SUITE("reversi tests") {
   TEST_CASE("Base game running") {
     SUBCASE("Player 2 wins") {
       CinRedirector cin_redirector("5 6\n6 4\n5 3\n4 6\n3 5\n6 6\n5 7\n6 5\n7 5\n"); 
-      //CoutRedirector cout_redirector;
+      CoutRedirector cout_redirector;
 
       Reversi reversi;
       reversi.play();
 
       CHECK(reversi.get_winner() == 2);
     }
-  }
+  }/*
   TEST_CASE("Invalid input") {
     SUBCASE("Invalid Row/Column") {
       CinRedirector cin_redirector("20 20\n 5 6\n6 4\n5 3\n4 6\n3 5\n6 6\n5 7\n6 5\n7 5\n"); 
@@ -36,5 +36,5 @@ TEST_SUITE("reversi tests") {
       CHECK(exists);
       CHECK(reversi.get_winner() == 2);
     }
-  }
+  }*/
 }

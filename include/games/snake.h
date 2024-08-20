@@ -1,19 +1,26 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+#include <termios.h>
 #include <string>
+#include <unistd.h>
+#include <csignal>
 #include "../player.h"
 #include "../game.h"
+#include "../../include/IOHandler.h"
+#include "../../include/terminal_handler.h"
+
 
 class Snake : public Game {
 private:
-  Player player;
-  char board[22][22];
+  std::vector<std::vector<char>> board;
   int snake[2][100];  // Snake coordinates
   int length; // Snake size
   int direction; // Snake direction
   int food_x, food_y;
   bool running;
+
+struct termios original_termios;
 
   void init_board();
   void place_food();
@@ -25,6 +32,8 @@ private:
   bool game_ended();
   void play_round();
   int score;
+
+
 
 public:
   Snake(Player player);
