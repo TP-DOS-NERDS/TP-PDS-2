@@ -2,7 +2,7 @@
 #include "../include/games/lig4.h"
 
 int main() {
- a  GameCenter gc; 
+  GameCenter gc; 
 
   gc.start_game_center();
 

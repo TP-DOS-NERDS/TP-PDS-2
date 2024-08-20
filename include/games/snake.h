@@ -3,7 +3,6 @@
 
 #include <termios.h>
 #include <string>
-#include <termios.h>
 #include <unistd.h>
 #include <csignal>
 #include "../player.h"

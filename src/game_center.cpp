@@ -128,23 +128,22 @@ void GameCenter::list_players() {
     });
   }
 
-  IOHandler::print<std::vector<consta   
-  IOHandler::print_players<std::vector<const Player*>>>(players_array);
+  IOHandler::print<std::vector<const Player*>>(players_array);
 }
 
 void GameCenter::execute_match() {
   std::string game_name = IOHandler::get<std::string>();
-  GameId game_id = string_to_game_id(game_name);
 
-  bool multiplayer_game = game_id != GameId::snake;
-  if(!game_exists(game_name)) {
-    throw forbidden_action_exception(ErrorMessage::game_not_found);
-  }
   
+    bool multiplayer_game = game_name != "snake";
   if(multiplayer_game) {
     std::string player1_username = IOHandler::get<std::string>();
     std::string player2_username = IOHandler::get<std::string>();
-
+    
+    if(!game_exists(game_name)) {
+      throw forbidden_action_exception(ErrorMessage::game_not_found);
+    }
+    
     Player* player1 = players.get(player1_username);
     Player* player2 = players.get(player2_username);
 
@@ -152,6 +151,7 @@ void GameCenter::execute_match() {
       throw forbidden_action_exception(ErrorMessage::player_not_found);
     }
 
+    GameId game_id = string_to_game_id(game_name);
     execute_multiplayer_match(game_id, player1, player2);
   }
 
@@ -160,10 +160,15 @@ void GameCenter::execute_match() {
 
     Player* player = players.get(player_username);
 
+    if(!game_exists(game_name)) {
+      throw forbidden_action_exception(ErrorMessage::game_not_found);
+    }
+    
     if(!players.has(player_username)) {
       throw forbidden_action_exception(ErrorMessage::player_not_found);
     }
 
+    GameId game_id = string_to_game_id(game_name);
     execute_single_player_match(game_id, player);
   }
 }
@@ -195,7 +200,7 @@ void GameCenter::execute_single_player_match(GameId game_id, Player* player) {
 
   Game* game;
   if(game_id == GameId::snake) {
-    game = new Snake();
+    //game = new Snake();
     game->play();
   }
 
