@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 
 namespace IOHandler {
 /**
@@ -54,7 +55,11 @@ namespace IOHandler {
 template <typename T>
 T IOHandler::get() {
   T value;
-  std::cin >> value;
+  if(!(std::cin >> value)) {
+    std::cin.clear(); 
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the line
+    return T();
+  }
   return value;
 }
 
