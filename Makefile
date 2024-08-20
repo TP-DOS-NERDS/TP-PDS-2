@@ -4,7 +4,7 @@ OBJ_DIR=obj
 SRC_DIR=src
 INCLUDE_DIR=include
 TESTS_DIR=tests
-TESTS=
+TESTS=true
 all: ${OBJ_DIR} main
 
 ${OBJ_DIR}:
