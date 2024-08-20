@@ -6,7 +6,6 @@
 #include <cctype>
 #include <string>
 #include <utility>
-#include <iostream>
 
 Lig4::Lig4() {
   board = std::vector<std::vector<int>>(Lig4::NUMBER_OF_ROWS, std::vector<int>(Lig4::NUMBER_OF_COLUMNS));
@@ -45,7 +44,7 @@ void Lig4::play() {
 
 
 void Lig4::play_round() {
-  IOHandler::print<std::vector<std::vector<int>>>(board);
+  IOHandler::print_board_plus_zero<std::vector<std::vector<int>>>(board);
 
   int column_index = get_valid_move_input();
   execute_move(column_index);  
@@ -61,7 +60,7 @@ int Lig4::get_valid_move_input() {
 
   while(move_input_is_invalid) {
     std::string move_input = IOHandler::get<std::string>();
-
+//
     try {
       validate_move_input(move_input);
       move_input_is_invalid = false;
@@ -200,9 +199,4 @@ bool Lig4::is_position_valid(std::pair<int,int> position) {
   if(position.first < 0 || position.first >= Lig4::NUMBER_OF_ROWS || position.second < 0 || position.second >= Lig4::NUMBER_OF_COLUMNS) return false;
 
   return true;
-}
-
-
-bool Lig4::is_position_set_by_current_player(std::pair<int,int> position) {
-  return board[position.first][position.second] == current_player;
 }

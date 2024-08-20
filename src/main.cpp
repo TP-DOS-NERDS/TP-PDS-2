@@ -1,5 +1,4 @@
 #include "../include/game_center.h" 
-#include "../include/games/lig4.h"
 
 int main() {
   GameCenter gc; 

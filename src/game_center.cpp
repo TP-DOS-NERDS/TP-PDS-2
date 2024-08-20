@@ -135,7 +135,7 @@ void GameCenter::execute_match() {
   std::string game_name = IOHandler::get<std::string>();
 
   
-    bool multiplayer_game = game_name != "snake";
+    bool multiplayer_game = game_name != "snake" && game_name != "minesweeper";
   if(multiplayer_game) {
     std::string player1_username = IOHandler::get<std::string>();
     std::string player2_username = IOHandler::get<std::string>();
@@ -181,6 +181,9 @@ void GameCenter::execute_multiplayer_match(GameId game_id, Player* player1, Play
   if(game_id == GameId::lig4) {
     game = new Lig4();
     game->play();
+  } else if (game_id == GameId::reversi) {
+    game = new Reversi();
+    game->play();
   }
 
   int winner = game->get_winner();
@@ -193,6 +196,8 @@ void GameCenter::execute_multiplayer_match(GameId game_id, Player* player1, Play
     player2->increase_wins(game_id);
     player1->increase_defeats(game_id);
   }
+
+  delete game;
 }
 
 void GameCenter::execute_single_player_match(GameId game_id, Player* player) {
@@ -200,7 +205,10 @@ void GameCenter::execute_single_player_match(GameId game_id, Player* player) {
 
   Game* game;
   if(game_id == GameId::snake) {
-    //game = new Snake();
+    game = new Snake();
+    game->play();
+  } else if (game_id == GameId::minesweeper) {
+    game = new Minesweeper();
     game->play();
   }
 
@@ -209,6 +217,8 @@ void GameCenter::execute_single_player_match(GameId game_id, Player* player) {
     player->increase_wins(game_id);
   }
   else {
-    player->increase_defeats(game_id);
+   player->increase_defeats(game_id);
   }
+
+  delete game;
 }

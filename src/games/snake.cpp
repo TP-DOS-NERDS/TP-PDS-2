@@ -1,5 +1,4 @@
 #include "../../include/games/snake.h"
-#include "../../include/player.h"
 
 #include <iostream>
 #include <termios.h>

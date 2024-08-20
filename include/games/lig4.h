@@ -41,22 +41,90 @@ private:
   bool game_ended() override;
   void play_round() override;
 
+/**
+ * @brief Lê da entrada padrão um movimento válido.
+ *
+ * @return A coordenada de um movimento válido escolhido pelo jogador. 
+ */
   int get_valid_move_input();
+
+/**
+ * @brief Valida uma string referente a um movimento.
+ *
+ * @param move_input String referente ao movimento digitado por um jogador.
+ */
   void validate_move_input(std::string move_input);
+
+/**
+ * @brief Executa um movimento.
+ *
+ * @param j A coluna na qual será posicionada uma "peça" no tabuleiro do Lig4.
+ */
   void execute_move(int j);
 
+/**
+ * @brief Computa os movimentos possíveis em um determinado estado do jogo.
+ *
+ * @return Um conjunto com as colunas nas quais é possível jogar.
+ */
   std::set<int> get_valid_moves();
+
+/**
+ * @brief Verifica se todas as posições do tabuleiro estão ocupadas.
+ *
+ * @return Uma flag booleana indicando se todas as posições estão ocupadas.
+ */
   bool all_positions_are_ocuppied();
 
+/**
+ * @brief Verifica se existe uma posição no tabuleiro que está conectada. Ou seja, se existe uma sequência de 4 peças do mesmo jogador em um dos sentidos válidos (horizontal, vertial, diagonal).
+ *
+ * @return Uma flag booleana indicando se existe uma posição no tabuleiro que está conectada.
+ */
   bool is_a_position_linked();
+
+/**
+ * @brief Verifica se uma determinada posição do tabuleiro está conectada. Ou seja, se é existe uma sequência de 4 peças do mesmo "valor" em um dos sentidos válidos (horizontal, vertical, diagonal) que passa pela posição.
+ *
+ * @param position A posição da peça na qual ocorrerá a verificação.
+ * @return Uma flag booleana indicando se a peça está conectada.
+ */
   bool position_linked(std::pair<int,int> position);
+
+/**
+ * @brief Verifica se uma posição do tabuleiro está conectada horizontalmente. Ou seja, se existe uma sequência de 4 peças do mesmo "valor" no sentido horizontal.
+
+ *
+ * @param position A posição da peça na qual ocorrerá a verificação.
+ * @return Uma flag booleana indicando se a peça está conectada horizontalmente.
+ */
   bool position_linked_horizontally(std::pair<int,int> position);
+
+/**
+ * @brief Verifica se uma posição do tabuleiro está conectada horizontalmente. Ou seja, se existe uma sequência de 4 peças do mesmo "valor" no sentido vertical.
+
+ *
+ * @param position A posição da peça na qual ocorrerá a verificação.
+ * @return Uma flag booleana indicando se a peça está conectada verticalmente.
+ */
   bool position_linked_vertically(std::pair<int,int> position);
+
+/**
+ * @brief Verifica se uma posição do tabuleiro está conectada horizontalmente. Ou seja, se existe uma sequência de 4 peças do mesmo "valor" no sentido diagonal.
+
+ *
+ * @param position A posição da peça na qual ocorrerá a verificação.
+ * @return Uma flag booleana indicando se a peça está conectada diagonalmente.
+ */
   bool position_linked_diagonally(std::pair<int,int> position);
-  bool is_position_set_by_current_player(std::pair<int,int> position);
 
+/**
+ * @brief Verifica se uma posição do tabuleiro está conectada horizontalmente. Ou seja, se existe uma sequência de 4 peças do mesmo "valor" no sentido diagonal.
 
-
+ *
+ * @param position A posição da peça na qual ocorrerá a verificação.
+ * @return Uma flag booleana indicando se a peça está conectada diagonalmente.
+ */
 };
 
 
