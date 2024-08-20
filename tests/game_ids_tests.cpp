@@ -14,7 +14,7 @@ TEST_SUITE("game_ids") {
     SUBCASE ("all game ids") {
       std::vector<GameId> ids = all_game_ids();
       for (auto id : ids) {
-        bool exists = id == GameId::lig4 || id == GameId::reversi;
+        bool exists = id == GameId::lig4 || id == GameId::reversi || id == GameId::snake;
         CHECK(exists);
       }
     }

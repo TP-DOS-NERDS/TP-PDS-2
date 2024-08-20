@@ -25,6 +25,10 @@ namespace IOHandler {
 
   template <typename T>
   void print(const std::vector<std::vector<int>>& board);
+
+
+  template <typename T>
+  void print(const std::vector<std::vector<char>>& board); 
 }
 
 template <typename T>
@@ -81,6 +85,17 @@ void IOHandler::print(const std::vector<std::vector<int>>& board) {
   }
 }
 
+template <typename T>
+void IOHandler::print(const std::vector<std::vector<char>>& board) {
+  for (int i = 0; i < 22; ++i) {
+    std::string row;
+    for (int j = 0; j < 22; ++j) {
+      std::cout << board[i][j] << ' '; 
+    }
+    std::cout << '\n';
+  }
+  std::cout << '\n';
+}
 
 #endif
 
