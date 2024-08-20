@@ -25,6 +25,113 @@ void GameCenter::start_game_center() {
   }
 }
 
+void GameCenter::execute_command() {
+  IOHandler::print("Digite o comando que voce deseja executar: ");
+  std::string command = IOHandler::get<std::string>();
+
+  if(command == Commands::REGISTER_PLAYER) {
+    try {
+      register_player();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::player_id_already_taken) {
+        IOHandler::print("Erro: Apelido repetido");
+      }
+    }
+  }
+  else if(command == Commands::UNREGISTER_PLAYER) {
+    try {
+      unregister_player();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::player_not_found) {
+        IOHandler::print("Erro: Jogador inexistente");
+      }
+    }
+  }
+  else if(command == Commands::LIST_PLAYERS) {
+    try {
+      list_players();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::invalid_player_sorting_criterion) {
+        IOHandler::print("Erro: Criterio de ordenacao de jogadores invalido");
+      }
+    }
+  }
+
+  else if(command == Commands::EXECUTE_MATCH) {
+    try {
+      execute_match();
+    }
+    catch(forbidden_action_exception& exception) {
+      if(exception.error_message == ErrorMessage::game_not_found) {
+        IOHandler::print("Erro: Jogo inexistente");
+      }
+      if(exception.error_message == ErrorMessage::player_not_found) {
+        IOHandler::print("Erro: Jogador inexistente");
+      }
+    }
+  }
+  else if(command == Commands::KILL_SYSTEM) {
+    continue_game_center_execution = false;
+  }
+
+  else throw forbidden_action_exception(ErrorMessage::command_not_found);
+
+  IOHandler::print("\n");
+}
+
+void GameCenter::register_player() {
+  std::string username = IOHandler::get<std::string>();
+  std::string name = IOHandler::get<std::string>();
+ 
+  if(players.has(username)) {
+    throw forbidden_action_exception(ErrorMessage::player_id_already_taken);
+  }
+
+  Player player = Player(username, name);
+
+  players.add(player);
+
+  std::string output = "Jogador " + username + " cadastrado com sucesso";
+  IOHandler::print<std::string>(output);
+}
+
+void GameCenter::unregister_player() {
+  std::string username = IOHandler::get<std::string>();
+
+  if(!players.has(username)) {
+    throw forbidden_action_exception(ErrorMessage::player_not_found);
+  }
+
+  players.remove(username);
+  std::string output = "Jogador " + username + " removido com sucesso";
+  IOHandler::print<std::string>(output);
+}
+
+void GameCenter::list_players() {
+  std::string sorting_criterio = IOHandler::get<std::string>();
+
+  if(sorting_criterio != "A" && sorting_criterio != "N") {
+    throw forbidden_action_exception(ErrorMessage::invalid_player_sorting_criterion);
+  }
+
+  bool sort_by_username = sorting_criterio == "A";
+
+
+  std::vector<const Player*> players_array = players.get_players();
+
+  if(!sort_by_username) {
+    sort(players_array.begin(), players_array.end(), [](const Player* a, const Player* b) {
+      return a->get_name() < b->get_name();
+    });
+  }
+
+  IOHandler::print<std::vector<consta   
+  IOHandler::print_players<std::vector<const Player*>>>(players_array);
+}
+
 void GameCenter::execute_match() {
   std::string game_name = IOHandler::get<std::string>();
   GameId game_id = string_to_game_id(game_name);
