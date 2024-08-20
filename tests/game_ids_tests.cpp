@@ -9,12 +9,18 @@ TEST_SUITE("game_ids") {
     SUBCASE("reversi") {
       CHECK(game_id_to_string(GameId::reversi) == "reversi");
     }
+    SUBCASE("snake") {
+      CHECK(game_id_to_string(GameId::snake) == "snake");
+    }
+    SUBCASE("minesweeper") {
+      CHECK(game_id_to_string(GameId::minesweeper) == "minesweeper");
+    }
   }
   TEST_CASE("get all ids") {
     SUBCASE ("all game ids") {
       std::vector<GameId> ids = all_game_ids();
       for (auto id : ids) {
-        bool exists = id == GameId::lig4 || id == GameId::reversi;
+        bool exists = id == GameId::lig4 || id == GameId::reversi || id == GameId::snake || id == GameId::minesweeper;
         CHECK(exists);
       }
     }
