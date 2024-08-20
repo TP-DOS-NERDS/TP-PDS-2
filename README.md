@@ -23,7 +23,7 @@ Para cumprir com esses objetivos, a primeira parte foi dividir o grupo de modo q
 - Ulisses: Lig4
 - Luis: Minesweeper + Makefile
 - Yuri: Snake
-- Caio: Algoritmo para Reversi e Lig4
+- Caio: Algoritmo para Lig4 e Cartão CRC
 - Ulisses e Rafael: Juntar as branches e criar o menu
 
 Todos os jogos ficaram são derivados de uma classe abstrata chamada Game. O tabuleiro "Board" é um vetor de vetores de int, inicializado com zeros.
