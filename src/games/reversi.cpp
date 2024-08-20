@@ -191,7 +191,7 @@ void Reversi::after_move() {
   }
 
   if (valid_moves==0) {
-    IOHandler::print("SEM MOVIMENTOS VALIDOS, A VEZ E DO JOGADOR " + (std::to_string(this->get_next_next_move_player_mark()))); 
+    IOHandler::print("SEM MOVIMENTOS VALIDOS, A VEZ E DO JOGADOR " + (std::string(1, this->get_next_next_move_player_mark()))); 
     swap_current_player(this);
   }
 }
@@ -199,7 +199,7 @@ void Reversi::after_move() {
 void Reversi::move(int x, int y) {
   if (!valid_move(x, y)) {
     // excessao de movimento invalido
-    IOHandler::print("MOVIMENTO NAO PERMITIDO NA POSICAO " + ("(" + std::to_string(x+1) +", "+ std::to_string(y+1) + ")")); 
+    IOHandler::print("ERRO: jogada inválida"); 
     return;
   }
 
@@ -315,11 +315,21 @@ void Reversi::play() {
 void Reversi::play_round() {
   IOHandler::print("Jogada [Player " + std::string(1, this->get_next_move_player_mark()) + "]: Insira a linha e a coluna na qual voce deseja jogar."); 
   IOHandler::print<std::vector<std::string>>(board);
+  int x, y;
+  try {
+    x = IOHandler::get<int>();
+    y = IOHandler::get<int>();
 
-  int x = IOHandler::get<int>();
-  int y = IOHandler::get<int>();
-  x--;y--;
-  this->move(x,y);
+    if (!(x <= 8 && y <= 8 && x >= 1 && y >= 1)) {
+      IOHandler::print("Input invalido: Insira novamente a linha e a coluna na qual voce deseja jogar");
+      return play_round();
+    }
+    x--;y--;
+    this->move(x,y);
+  } catch (...) {
+    IOHandler::print("Erro: formato incorreto"); 
+    this->play_round();
+  }
 }
 
 int Reversi::get_winner() {
