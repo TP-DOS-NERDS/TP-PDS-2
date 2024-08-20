@@ -14,7 +14,7 @@ TEST_SUITE("reversi tests") {
 
       CHECK(reversi.get_winner() == 2);
     }
-  }/*
+  }
   TEST_CASE("Invalid input") {
     SUBCASE("Invalid Row/Column") {
       CinRedirector cin_redirector("20 20\n 5 6\n6 4\n5 3\n4 6\n3 5\n6 6\n5 7\n6 5\n7 5\n"); 
@@ -27,7 +27,7 @@ TEST_SUITE("reversi tests") {
         
       bool exists = false;
       for (auto out : output) {
-        if (out ==  "Input invalido: Insira novamente a linha e a coluna na qual voce deseja joga") {
+        if (out ==  "Input invalido: Insira novamente a linha e a coluna na qual voce deseja jogar") {
           exists = true;
           break;
         }
@@ -36,5 +36,5 @@ TEST_SUITE("reversi tests") {
       CHECK(exists);
       CHECK(reversi.get_winner() == 2);
     }
-  }*/
+  }
 }

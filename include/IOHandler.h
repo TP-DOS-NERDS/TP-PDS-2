@@ -124,10 +124,17 @@ void IOHandler::print(const std::vector<std::string>& board) {
   const int EMPTY_SPACE = 0;
   const std::string horizontal_line = std::string(34, '-');
 
+  auto get_mark = [&](char c) {
+    if (c == '1') return 'X';
+    if (c == '2') return 'O';
+    if (c == '3') return '?';
+    else return '.';
+  };
+
   for(int i = 0; i < board.size(); i++) {
     std::string row = "| ";
     for(int j = 0; j < board[i].size(); j++) {
-      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(board[i][j]);
+      board[i][j] == EMPTY_SPACE ? row.push_back(' ') : row.push_back(get_mark(board[i][j]));
       row += " | ";
     }
 

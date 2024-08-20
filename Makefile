@@ -4,7 +4,12 @@ OBJ_DIR=obj
 SRC_DIR=src
 INCLUDE_DIR=include
 TESTS_DIR=tests
+#Para compilar com testes, utilize a linha (1), para compilar normal, utilize a linha (2)
+#linha (1)
+#TESTS=true
+#linha (2)
 TESTS=
+
 
 all: ${OBJ_DIR} main
 
