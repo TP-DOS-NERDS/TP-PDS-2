@@ -22,6 +22,9 @@ class Commands {
   };
 
 
+/**
+ * @brief Classe gerencia a execucao de comandos do sistema
+ */
 class GameCenter {
 public:
 /**

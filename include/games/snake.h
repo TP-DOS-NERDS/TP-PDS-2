@@ -11,6 +11,9 @@
 #include "../../include/terminal_handler.h"
 
 
+/**
+ * @brief Classe que representa o jogo Snake.
+ */
 class Snake : public Game {
 private:
   std::vector<std::vector<char>> board;

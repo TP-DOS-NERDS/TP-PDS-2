@@ -5,6 +5,9 @@
 #include <vector>
 #include <unordered_map>
 
+/**
+ * @brief Enum que define os jogos do sistema
+ */
 enum class GameId {
     not_found = -1,
     lig4 = 0,

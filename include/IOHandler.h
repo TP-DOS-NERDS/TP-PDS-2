@@ -8,6 +8,9 @@
 #include <string>
 #include <limits>
 
+/**
+ * @brief Namespace que lida com o input e output 
+ */
 namespace IOHandler {
 /**
  * @brief Lê um valor de um tipo T da entrada padrão.

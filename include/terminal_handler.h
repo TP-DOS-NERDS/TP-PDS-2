@@ -4,6 +4,9 @@
 #include <csignal>
 
 
+/**
+ * @brief Classe que gerencia o estado atual do terminal
+ */
 class TerminalHandler {
 public:
   static void set_new_terminal_configuration();

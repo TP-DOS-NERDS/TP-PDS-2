@@ -5,6 +5,9 @@
 #include "../IOHandler.h"
 #include <vector>
 
+/**
+ * @brief Classe que representa o jogo de Minesweeper.
+ */
 class Minesweeper : public Game {
 
 public:

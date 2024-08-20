@@ -10,6 +10,9 @@
 #include "../game.h"
 
 
+/**
+ * @brief Classe que representa o jogo LIG4.
+ */
 class Lig4 : public Game {
 public:
   Lig4();

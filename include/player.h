@@ -7,6 +7,9 @@
 #include "game_ids.h"
 
 
+/**
+ * @brief Classe que descreve o player 
+ */
 class Player {
 private:
   std::string username;

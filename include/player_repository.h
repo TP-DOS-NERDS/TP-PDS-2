@@ -5,6 +5,9 @@
 #include <vector>
 #include "./player.h"
 
+/**
+ * @brief Classe que gerencia os players, de maneira similar ao repository pattern
+ */
 class PlayersRepository {
 private:
   std::map<std::string, Player> players;

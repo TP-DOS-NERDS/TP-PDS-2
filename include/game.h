@@ -4,6 +4,9 @@
 #include <vector>
 #include <utility>
 
+/**
+ * @brief  classe abstrata que representa os jogos
+ */
 class Game {
 public:
 /**
