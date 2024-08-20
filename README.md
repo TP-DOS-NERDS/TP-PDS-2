@@ -55,6 +55,9 @@ Esse processo se repete até acabar o jogo.
 
 Minesweeper
 -
+Regras: Revele casas onde não há bomba para vencer.
+Os números das casas contam quantas bombas existem em casas adjacentes.
+As bombas são aleatoriatoriamente posicionadas e há bandeiras para organizar e revelar casas com mais eficiência.
 A cada jogada, deve-se receber do usuário um input entre revelar uma casa ou colocar uma bandeira na casa.
 
   Se ele quiser revelar uma casa, deve-se:
